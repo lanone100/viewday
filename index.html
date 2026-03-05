@@ -3,194 +3,233 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>時光維度 - 全功能天數計算機</title>
+    <title>TimeMaster Pro - 專業工期計算機</title>
     <style>
         :root {
-            --primary: #4834d4;
-            --secondary: #686de0;
-            --accent: #eb4d4b;
-            --bg: #f0f2f5;
+            --bg: #f0f4f8;
+            --primary: #4a69bd;
+            --workday: #218c74;
             --card: #ffffff;
+            --text: #2d3436;
         }
 
         body {
-            font-family: 'PingFang TC', sans-serif;
+            font-family: 'PingFang TC', system-ui, sans-serif;
             background-color: var(--bg);
             margin: 0;
-            padding: 20px;
+            padding: 15px;
             display: flex;
             justify-content: center;
         }
 
-        .app-container {
+        .container {
             width: 100%;
-            max-width: 600px;
+            max-width: 650px;
             background: var(--card);
-            border-radius: 30px;
-            padding: 25px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+            border-radius: 24px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            overflow: hidden;
+            padding-bottom: 20px;
         }
 
-        h2 {
-            text-align: center;
-            color: var(--primary);
-            letter-spacing: 2px;
-            margin-bottom: 25px;
+        .tabs { display: flex; background: #e2e8f0; padding: 5px; gap: 5px; }
+        .tab-btn {
+            flex: 1; padding: 12px; border: none; background: none;
+            cursor: pointer; font-weight: bold; border-radius: 12px;
+            color: #64748b; transition: 0.3s;
+        }
+        .tab-btn.active { background: var(--card); color: var(--primary); }
+
+        .content-panel { display: none; padding: 25px; animation: fadeIn 0.3s ease; }
+        .content-panel.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .form-row { margin-bottom: 20px; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+
+        label { display: block; font-size: 0.85rem; margin-bottom: 8px; color: #475569; font-weight: 600; }
+        input, select {
+            width: 100%; padding: 12px; border: 2px solid #f1f5f9;
+            border-radius: 12px; font-size: 1rem; box-sizing: border-box;
         }
 
-        .input-section {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-bottom: 25px;
-        }
-
-        label {
-            font-size: 0.85rem;
-            color: #636e72;
-            margin-bottom: 5px;
-            display: block;
-            font-weight: bold;
-        }
-
-        input[type="date"] {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #dfe6e9;
-            border-radius: 12px;
-            font-size: 1rem;
-            box-sizing: border-box;
-        }
-
-        .main-display {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border-radius: 20px;
-            padding: 30px;
-            color: white;
-            text-align: center;
-            margin-bottom: 25px;
-            box-shadow: 0 10px 20px rgba(72, 52, 212, 0.2);
-        }
-
-        .main-value {
-            font-size: 4rem;
-            font-weight: 900;
-            line-height: 1;
-        }
-
-        .main-unit { font-size: 1.2rem; margin-left: 5px; }
-
-        /* 多維度網格 */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-        }
-
-        .stat-box {
-            background: #f8f9fa;
+        /* 工作日勾選區 */
+        .workday-selector {
+            background: #f8fafc;
             padding: 15px;
             border-radius: 15px;
-            border-left: 5px solid var(--secondary);
-            transition: transform 0.2s;
+            margin-bottom: 20px;
         }
+        .check-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+        .check-item {
+            display: flex;
+            align-items: center;
+            font-size: 0.85rem;
+            cursor: pointer;
+        }
+        .check-item input { width: auto; margin-right: 5px; }
 
-        .stat-box:hover { transform: translateY(-3px); }
+        /* 結果區 */
+        .result-box {
+            padding: 20px; border-radius: 18px; text-align: center;
+            margin-top: 10px; border: 2px solid #e2e8f0;
+        }
+        .work-res {
+            background: linear-gradient(135deg, #218c74, #1b6d5a);
+            color: white; border: none; margin-top: 15px;
+        }
+        .big-text { font-size: 2.2rem; font-weight: 800; display: block; }
+        .unit { font-size: 1rem; font-weight: normal; margin-left: 5px; }
 
-        .stat-label { font-size: 0.8rem; color: #b2bec3; margin-bottom: 5px; }
-        .stat-value { font-size: 1.1rem; font-weight: bold; color: #2d3436; overflow-wrap: break-word; }
-
-        @media (min-width: 600px) {
-            .stats-grid { grid-template-columns: repeat(3, 1fr); }
+        @media (max-width: 480px) {
+            .check-grid { grid-template-columns: repeat(3, 1fr); }
         }
     </style>
 </head>
 <body>
 
-<div class="app-container">
-    <h2>時光維度計算機</h2>
+<div class="container">
+    <div class="tabs">
+        <button class="tab-btn active" onclick="openTab(event, 'diff')">相隔天數/工期</button>
+        <button class="tab-btn" onclick="openTab(event, 'calc')">日期推算</button>
+    </div>
 
-    <div class="input-section">
-        <div>
-            <label>起始日期</label>
-            <input type="date" id="date-start">
+    <div id="diff" class="content-panel active">
+        <div class="grid-2">
+            <div class="form-row">
+                <label>開始日期</label>
+                <input type="date" id="d-start" onchange="runAllCalc()">
+            </div>
+            <div class="form-row">
+                <label>結束日期</label>
+                <input type="date" id="d-end" onchange="runAllCalc()">
+            </div>
         </div>
-        <div>
-            <label>目標日期</label>
-            <input type="date" id="date-end">
+
+        <div class="workday-selector">
+            <label>設定工作日 (勾選後計算工作天)</label>
+            <div class="check-grid">
+                <label class="check-item"><input type="checkbox" value="1" checked onchange="runAllCalc()">週一</label>
+                <label class="check-item"><input type="checkbox" value="2" checked onchange="runAllCalc()">週二</label>
+                <label class="check-item"><input type="checkbox" value="3" checked onchange="runAllCalc()">週三</label>
+                <label class="check-item"><input type="checkbox" value="4" checked onchange="runAllCalc()">週四</label>
+                <label class="check-item"><input type="checkbox" value="5" checked onchange="runAllCalc()">週五</label>
+                <label class="check-item"><input type="checkbox" value="6" onchange="runAllCalc()">週六</label>
+                <label class="check-item"><input type="checkbox" value="0" onchange="runAllCalc()">週日</label>
+            </div>
+        </div>
+
+        <div class="result-box">
+            <span style="color: #64748b;">總曆天數 (含假日)</span>
+            <span class="big-text" id="total-days" style="color: var(--primary);">0<span class="unit">天</span></span>
+        </div>
+
+        <div class="result-box work-res">
+            <span style="opacity: 0.9;">計算工作天數</span>
+            <span class="big-text" id="work-days">0<span class="unit">工作天</span></span>
+            <div style="font-size: 0.8rem; margin-top: 5px; opacity: 0.8;">(僅包含勾選的星期)</div>
         </div>
     </div>
 
-    <div class="main-display">
-        <div style="font-size: 0.9rem; opacity: 0.8;">相隔總天數</div>
-        <div class="main-value" id="res-days">0<span class="main-unit">天</span></div>
-    </div>
-
-    <div class="stats-grid">
-        <div class="stat-box">
-            <div class="stat-label">週數 (Weeks)</div>
-            <div class="stat-value" id="res-weeks">0</div>
+    <div id="calc" class="content-panel">
+        <div class="form-row">
+            <label>基準日期</label>
+            <input type="date" id="c-base" onchange="calcTargetDate()">
         </div>
-        <div class="stat-box" style="border-left-color: #00cec9;">
-            <div class="stat-label">月數 (Months)</div>
-            <div class="stat-value" id="res-months">0</div>
+        <div class="grid-2">
+            <div class="form-row">
+                <label>操作</label>
+                <select id="c-op" onchange="calcTargetDate()">
+                    <option value="add">加上 (+)</option>
+                    <option value="sub">減去 (-)</option>
+                </select>
+            </div>
+            <div class="form-row">
+                <label>天數</label>
+                <input type="number" id="c-days" value="10" oninput="calcTargetDate()">
+            </div>
         </div>
-        <div class="stat-box" style="border-left-color: #fdcb6e;">
-            <div class="stat-label">年數 (Years)</div>
-            <div class="stat-value" id="res-years">0</div>
-        </div>
-        <div class="stat-box" style="border-left-color: #a29bfe;">
-            <div class="stat-label">小時數 (Hours)</div>
-            <div class="stat-value" id="res-hours">0</div>
-        </div>
-        <div class="stat-box" style="border-left-color: #fab1a0;">
-            <div class="stat-label">分鐘數 (Minutes)</div>
-            <div class="stat-value" id="res-mins">0</div>
-        </div>
-        <div class="stat-box" style="border-left-color: #ff7675;">
-            <div class="stat-label">秒數 (Seconds)</div>
-            <div class="stat-value" id="res-secs">0</div>
+        <div class="result-box" style="border-color: var(--primary);">
+            <div style="font-size: 0.9rem; color: #747d8c;">推算結果</div>
+            <div class="big-text" id="calc-res" style="color: var(--primary); font-size: 1.8rem;">-</div>
         </div>
     </div>
 </div>
 
 <script>
-    const d1 = document.getElementById('date-start');
-    const d2 = document.getElementById('date-end');
-
-    // 初始化日期
-    const now = new Date();
-    const tomorrow = new Date();
-    tomorrow.setDate(now.getDate() + 1);
-    
-    d1.value = now.toISOString().split('T')[0];
-    d2.value = tomorrow.toISOString().split('T')[0];
-
-    function updateAll() {
-        const start = new Date(d1.value);
-        const end = new Date(d2.value);
-        
-        if (isNaN(start) || isNaN(end)) return;
-
-        const diffMs = Math.abs(end - start);
-        const diffDays = diffMs / (1000 * 60 * 60 * 24);
-
-        // 格式化數字輸出
-        const fmt = (num) => num.toLocaleString(undefined, {maximumFractionDigits: 2});
-        const fmtInt = (num) => Math.floor(num).toLocaleString();
-
-        document.getElementById('res-days').innerHTML = `${Math.floor(diffDays)}<span class="main-unit">天</span>`;
-        document.getElementById('res-weeks').innerText = fmt(diffDays / 7);
-        document.getElementById('res-months').innerText = fmt(diffDays / 30.4375);
-        document.getElementById('res-years').innerText = fmt(diffDays / 365.25);
-        document.getElementById('res-hours').innerText = fmtInt(diffDays * 24);
-        document.getElementById('res-mins').innerText = fmtInt(diffDays * 1440);
-        document.getElementById('res-secs').innerText = fmtInt(diffDays * 86400);
+    function openTab(evt, tabName) {
+        let contents = document.getElementsByClassName("content-panel");
+        for (let i = 0; i < contents.length; i++) contents[i].classList.remove("active");
+        let tabs = document.getElementsByClassName("tab-btn");
+        for (let i = 0; i < tabs.length; i++) tabs[i].classList.remove("active");
+        document.getElementById(tabName).classList.add("active");
+        evt.currentTarget.classList.add("active");
     }
 
-    d1.addEventListener('change', updateAll);
-    d2.addEventListener('change', updateAll);
-    updateAll(); // 初始計算
+    // 初始化日期
+    const today = new Date();
+    document.getElementById('d-start').valueAsDate = today;
+    document.getElementById('d-end').valueAsDate = today;
+    document.getElementById('c-base').valueAsDate = today;
+
+    function runAllCalc() {
+        const startStr = document.getElementById('d-start').value;
+        const endStr = document.getElementById('d-end').value;
+        if (!startStr || !endStr) return;
+
+        let start = new Date(startStr);
+        let end = new Date(endStr);
+        
+        // 確保 start 小於 end，若反過來則交換
+        let reverse = false;
+        if (start > end) {
+            [start, end] = [end, start];
+            reverse = true;
+        }
+
+        // 1. 計算總曆天數
+        const diffTime = Math.abs(end - start);
+        const totalDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        document.getElementById('total-days').innerHTML = `${totalDays}<span class="unit">天</span>`;
+
+        // 2. 計算工作天 (需考慮勾選的星期)
+        const checkboxes = document.querySelectorAll('.check-grid input:checked');
+        const allowedDays = Array.from(checkboxes).map(cb => parseInt(cb.value));
+        
+        let workDays = 0;
+        let current = new Date(start);
+        
+        // 迴圈計算範圍內的每一天 (包含首尾)
+        // 注意：這裡採用「包含首天，直到當天結束」的工期邏輯
+        while (current <= end) {
+            if (allowedDays.includes(current.getDay())) {
+                workDays++;
+            }
+            current.setDate(current.getDate() + 1);
+        }
+
+        // 如果起始與結束是同一天，且是工作日，則為1天；若計算間隔則需視需求調整
+        // 這裡採用的是「包含當天」的工期計算模式
+        document.getElementById('work-days').innerHTML = `${workDays}<span class="unit">工作天</span>`;
+    }
+
+    function calcTargetDate() {
+        const base = new Date(document.getElementById('c-base').value);
+        const op = document.getElementById('c-op').value;
+        const days = parseInt(document.getElementById('c-days').value) || 0;
+        const result = new Date(base);
+        result.setDate(base.getDate() + (op === 'add' ? days : -days));
+        const opt = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' };
+        document.getElementById('calc-res').innerText = result.toLocaleDateString('zh-TW', opt);
+    }
+
+    // 初始執行
+    runAllCalc();
+    calcTargetDate();
 </script>
 
 </body>
