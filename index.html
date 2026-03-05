@@ -1,138 +1,439 @@
 <!DOCTYPE html>
+
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>TimeMaster Pro 2.1 - 完整修復版</title>
+    <title>TimeMaster Pro 2.1</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Sora:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #4a69bd;
-            --secondary: #218c74;
-            --bg: #f4f7f6;
-            --card: #ffffff;
-            --border: #e2e8f0;
-        }
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-            background-color: var(--bg);
-            margin: 0; padding: 10px; display: flex; justify-content: center;
-        }
-        .container {
-            width: 100%; max-width: 600px;
-            background: var(--card); border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05); overflow: hidden;
-        }
-        .tabs { display: flex; background: #edf2f7; padding: 5px; }
-        .tab-btn {
-            flex: 1; padding: 12px 5px; border: none; background: none;
-            cursor: pointer; font-weight: 600; border-radius: 10px;
-            color: #718096; transition: 0.2s;
-        }
-        .tab-btn.active { background: var(--card); color: var(--primary); }
-        .panel { display: none; padding: 20px; }
-        .panel.active { display: block; }
-        .row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px; }
-        label { font-size: 0.85rem; color: #4a5568; margin-bottom: 5px; display: block; font-weight: bold; }
-        input[type="date"], input[type="number"], select {
-            width: 100%; padding: 12px; border: 2px solid var(--border);
-            border-radius: 10px; font-size: 1rem;
-        }
-        /* 工作日勾選區樣式 */
-        .workday-box {
-            background: #f8fafc; padding: 15px; border-radius: 12px; 
-            margin-bottom: 20px; border: 1px solid var(--border);
-        }
-        .check-grid {
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(75px, 1fr)); gap: 8px;
-        }
-        .check-item {
-            display: flex; align-items: center; font-size: 0.9rem;
-            cursor: pointer; background: white; padding: 8px;
-            border-radius: 8px; border: 1px solid var(--border);
-            user-select: none;
-        }
-        .check-item input { margin-right: 8px; width: 18px; height: 18px; cursor: pointer; }
-        .res-display {
-            text-align: center; padding: 20px; border-radius: 15px;
-            background: #f1f5f9; margin-bottom: 10px; border: 1px solid #e2e8f0;
-        }
-        .big-val { font-size: 2.4rem; font-weight: 800; color: var(--primary); display: block; }
-        .work-val { background: var(--secondary); color: white; border: none; }
-        .work-val .big-val { color: white; }
-        @media (max-width: 450px) { .row { grid-template-columns: 1fr; } }
-    </style>
+            /* ── 色盤 ── */
+            --bg-deep:    #0d0f1a;
+            --bg-mid:     #13172a;
+            --bg-card:    #1a1f35;
+            --bg-input:   #111428;
+            --bg-section: #0f1220;
+
+```
+        --accent-gold:   #f5a623;
+        --accent-orange: #ff6b35;
+        --accent-cyan:   #00d4ff;
+        --accent-violet: #7c5cbf;
+        --accent-rose:   #f43f5e;
+        --accent-lime:   #84cc16;
+
+        --grad-tab:    linear-gradient(135deg, #f5a623 0%, #ff6b35 100%);
+        --grad-total:  linear-gradient(135deg, #1a2a4a 0%, #1e3a5f 100%);
+        --grad-work:   linear-gradient(135deg, #1a3a2a 0%, #164430 100%);
+        --grad-date:   linear-gradient(135deg, #2a1a3a 0%, #3a1f5a 100%);
+        --grad-header: linear-gradient(180deg, #1a1f35 0%, #13172a 100%);
+
+        --text-bright: #f0f4ff;
+        --text-mid:    #8892b0;
+        --text-dim:    #4a5568;
+        --border-dim:  rgba(255,255,255,0.07);
+        --border-glow: rgba(245,166,35,0.35);
+    }
+
+    *, *::before, *::after {
+        box-sizing: border-box;
+        -webkit-tap-highlight-color: transparent;
+        min-width: 0;
+    }
+    html, body {
+        width: 100%; max-width: 100%;
+        overflow-x: hidden; margin: 0;
+    }
+    body {
+        font-family: 'Sora', sans-serif;
+        background: var(--bg-deep);
+        /* 微噪點質感背景 */
+        background-image:
+            radial-gradient(ellipse 80% 50% at 50% -20%, rgba(124,92,191,0.18) 0%, transparent 60%),
+            radial-gradient(ellipse 60% 40% at 80% 110%, rgba(245,166,35,0.10) 0%, transparent 55%);
+        padding: 14px;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        min-height: 100vh;
+    }
+
+    /* ── 外殼容器 ── */
+    .container {
+        width: 100%; max-width: 560px;
+        border-radius: 24px;
+        overflow: hidden;
+        border: 1px solid var(--border-dim);
+        box-shadow:
+            0 0 0 1px rgba(245,166,35,0.08),
+            0 24px 60px rgba(0,0,0,0.6),
+            0 4px 16px rgba(0,0,0,0.4);
+    }
+
+    /* ── 頂部 Header ── */
+    .header {
+        background: var(--grad-header);
+        padding: 18px 20px 0;
+        border-bottom: 1px solid var(--border-dim);
+    }
+    .header-title {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 14px;
+    }
+    .header-icon {
+        width: 36px; height: 36px;
+        border-radius: 10px;
+        background: var(--grad-tab);
+        display: flex; align-items: center; justify-content: center;
+        font-size: 1.1rem;
+        box-shadow: 0 4px 12px rgba(245,166,35,0.4);
+    }
+    .header-text h1 {
+        font-size: 1rem; font-weight: 800;
+        color: var(--text-bright);
+        margin: 0; letter-spacing: 0.02em;
+    }
+    .header-text p {
+        font-size: 0.7rem; color: var(--text-mid);
+        margin: 0; font-family: 'DM Mono', monospace;
+        letter-spacing: 0.05em;
+    }
+
+    /* ── 分頁列 ── */
+    .tabs {
+        display: flex;
+        gap: 4px;
+        padding: 0 0 0 0;
+    }
+    .tab-btn {
+        flex: 1;
+        padding: 11px 8px;
+        border: none;
+        background: none;
+        cursor: pointer;
+        font-family: 'Sora', sans-serif;
+        font-weight: 600;
+        font-size: 0.82rem;
+        color: var(--text-mid);
+        border-bottom: 2px solid transparent;
+        transition: color 0.2s, border-color 0.2s;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        letter-spacing: 0.02em;
+    }
+    .tab-btn.active {
+        color: var(--accent-gold);
+        border-bottom-color: var(--accent-gold);
+    }
+
+    /* ── 面板 ── */
+    .panel { display: none; padding: 18px; background: var(--bg-mid); }
+    .panel.active { display: block; }
+
+    /* ── 雙欄格線 ── */
+    .row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        margin-bottom: 14px;
+        width: 100%;
+    }
+
+    /* ── 欄位標籤 ── */
+    .field-label {
+        font-size: 0.72rem;
+        color: var(--text-mid);
+        margin-bottom: 6px;
+        display: block;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        font-family: 'DM Mono', monospace;
+    }
+
+    /* ── 輸入框 ── */
+    input[type="date"],
+    input[type="number"],
+    select {
+        width: 100%; max-width: 100%;
+        padding: 10px 12px;
+        border: 1.5px solid var(--border-dim);
+        border-radius: 10px;
+        font-size: 0.92rem;
+        font-family: 'DM Mono', monospace;
+        color: var(--text-bright);
+        background: var(--bg-input);
+        -webkit-appearance: none;
+        appearance: none;
+        transition: border-color 0.2s, box-shadow 0.2s;
+        /* 讓日期選擇器顏色跟隨主題 */
+        color-scheme: dark;
+    }
+    input[type="date"]:focus,
+    input[type="number"]:focus,
+    select:focus {
+        outline: none;
+        border-color: var(--accent-gold);
+        box-shadow: 0 0 0 3px rgba(245,166,35,0.15);
+    }
+    input[type="number"]::-webkit-inner-spin-button { opacity: 1; }
+
+    .select-wrap { position: relative; }
+    .select-wrap::after {
+        content: "▾";
+        position: absolute;
+        right: 11px; top: 50%;
+        transform: translateY(-50%);
+        pointer-events: none;
+        color: var(--accent-gold);
+        font-size: 0.85rem;
+    }
+
+    /* ── 工作日勾選區 ── */
+    .workday-box {
+        background: var(--bg-section);
+        padding: 13px;
+        border-radius: 14px;
+        margin-bottom: 14px;
+        border: 1px solid var(--border-dim);
+        width: 100%; overflow: hidden;
+    }
+    .workday-title {
+        font-size: 0.72rem;
+        color: var(--text-mid);
+        margin-bottom: 10px;
+        display: block;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        font-family: 'DM Mono', monospace;
+    }
+    .check-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(66px, 1fr));
+        gap: 7px;
+        width: 100%;
+    }
+    /* 每個星期對應不同強調色 */
+    .check-item {
+        display: flex !important;
+        align-items: center;
+        font-size: 0.8rem;
+        cursor: pointer;
+        background: var(--bg-card);
+        padding: 7px 6px;
+        border-radius: 8px;
+        border: 1.5px solid var(--border-dim);
+        user-select: none;
+        font-weight: 600;
+        color: var(--text-mid);
+        margin-bottom: 0;
+        overflow: hidden;
+        white-space: nowrap;
+        transition: border-color 0.15s, color 0.15s, background 0.15s;
+        font-family: 'Sora', sans-serif;
+    }
+    .check-item:has(input:checked) {
+        background: rgba(245,166,35,0.08);
+        border-color: rgba(245,166,35,0.5);
+        color: var(--accent-gold);
+    }
+    /* 週六週日特殊色 */
+    .check-item.sat:has(input:checked) {
+        background: rgba(0,212,255,0.08);
+        border-color: rgba(0,212,255,0.5);
+        color: var(--accent-cyan);
+    }
+    .check-item.sun:has(input:checked) {
+        background: rgba(244,63,94,0.08);
+        border-color: rgba(244,63,94,0.5);
+        color: var(--accent-rose);
+    }
+    .check-item input[type="checkbox"] {
+        width: 14px; height: 14px;
+        cursor: pointer;
+        margin-right: 5px;
+        flex-shrink: 0;
+        accent-color: var(--accent-gold);
+    }
+    .check-item.sat input[type="checkbox"] { accent-color: var(--accent-cyan); }
+    .check-item.sun input[type="checkbox"] { accent-color: var(--accent-rose); }
+
+    /* ── 結果卡片 ── */
+    .res-display {
+        text-align: center;
+        padding: 20px 14px;
+        border-radius: 16px;
+        margin-bottom: 10px;
+        border: 1px solid var(--border-dim);
+        width: 100%;
+        overflow: hidden;
+        position: relative;
+    }
+    /* 總天數：深藍漸層 + 左側裝飾光條 */
+    .res-total {
+        background: var(--grad-total);
+        border-color: rgba(0,212,255,0.2);
+    }
+    .res-total::before {
+        content: '';
+        position: absolute;
+        left: 0; top: 0; bottom: 0; width: 3px;
+        background: linear-gradient(180deg, var(--accent-cyan), var(--accent-violet));
+        border-radius: 16px 0 0 16px;
+    }
+    /* 工作天：深綠漸層 + 左側光條 */
+    .res-work {
+        background: var(--grad-work);
+        border-color: rgba(132,204,22,0.2);
+    }
+    .res-work::before {
+        content: '';
+        position: absolute;
+        left: 0; top: 0; bottom: 0; width: 3px;
+        background: linear-gradient(180deg, var(--accent-lime), #22c55e);
+        border-radius: 16px 0 0 16px;
+    }
+    /* 日期推算：深紫漸層 + 左側光條 */
+    .res-date {
+        background: var(--grad-date);
+        border-color: rgba(124,92,191,0.3);
+    }
+    .res-date::before {
+        content: '';
+        position: absolute;
+        left: 0; top: 0; bottom: 0; width: 3px;
+        background: linear-gradient(180deg, var(--accent-violet), var(--accent-rose));
+        border-radius: 16px 0 0 16px;
+    }
+
+    .res-display small {
+        display: block;
+        font-size: 0.7rem;
+        font-family: 'DM Mono', monospace;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-bottom: 6px;
+    }
+    .res-total small  { color: var(--accent-cyan); }
+    .res-work small   { color: var(--accent-lime); }
+    .res-date small   { color: #b794f4; }
+
+    .big-val {
+        font-size: 2.4rem;
+        font-weight: 800;
+        display: block;
+        word-break: break-word;
+        line-height: 1.1;
+        font-family: 'DM Mono', monospace;
+    }
+    .res-total .big-val { color: var(--accent-cyan); text-shadow: 0 0 20px rgba(0,212,255,0.4); }
+    .res-work  .big-val { color: var(--accent-lime); text-shadow: 0 0 20px rgba(132,204,22,0.4); }
+    .res-date  .big-val { color: #c4b5fd; text-shadow: 0 0 20px rgba(124,92,191,0.4); font-size: 1.4rem; line-height: 1.4; }
+
+    /* ── RWD ── */
+    @media (max-width: 400px) {
+        body { padding: 8px; }
+        .panel { padding: 13px; }
+        .row { grid-template-columns: 1fr; gap: 10px; }
+        .big-val { font-size: 2rem; }
+        .res-date .big-val { font-size: 1.2rem; }
+    }
+</style>
+```
+
 </head>
 <body>
-
 <div class="container">
+
+```
+<!-- ── Header ── -->
+<div class="header">
+    <div class="header-title">
+        <div class="header-icon">⏱</div>
+        <div class="header-text">
+            <h1>TimeMaster Pro</h1>
+            <p>v2.1 · 工期 &amp; 日期計算工具</p>
+        </div>
+    </div>
     <nav class="tabs">
-        <button class="tab-btn active" data-target="p1">工期計算機</button>
-        <button class="tab-btn" data-target="p2">日期推算</button>
+        <button class="tab-btn active" data-target="p1">🗓 工期計算機</button>
+        <button class="tab-btn" data-target="p2">📐 日期推算</button>
     </nav>
+</div>
 
-    <div id="p1" class="panel active">
-        <div class="row">
-            <div>
-                <label>開始日期</label>
-                <input type="date" id="start-date">
-            </div>
-            <div>
-                <label>結束日期</label>
-                <input type="date" id="end-date">
-            </div>
+<!-- ── Panel 1：工期計算機 ── -->
+<div id="p1" class="panel active">
+    <div class="row">
+        <div>
+            <span class="field-label">開始日期</span>
+            <input type="date" id="start-date">
         </div>
-
-        <div class="workday-box">
-            <label>設定工作日 (勾選即納入計算)</label>
-            <div class="check-grid" id="weekday-group">
-                <label class="check-item"><input type="checkbox" value="1" checked>週一</label>
-                <label class="check-item"><input type="checkbox" value="2" checked>週二</label>
-                <label class="check-item"><input type="checkbox" value="3" checked>週三</label>
-                <label class="check-item"><input type="checkbox" value="4" checked>週四</label>
-                <label class="check-item"><input type="checkbox" value="5" checked>週五</label>
-                <label class="check-item"><input type="checkbox" value="6">週六</label>
-                <label class="check-item"><input type="checkbox" value="0">週日</label>
-            </div>
-        </div>
-
-        <div class="res-display">
-            <small>總曆天數 (含首尾)</small>
-            <span class="big-val" id="out-total">0 天</span>
-        </div>
-        <div class="res-display work-val">
-            <small>合計工作天</small>
-            <span class="big-val" id="out-work">0 天</span>
+        <div>
+            <span class="field-label">結束日期</span>
+            <input type="date" id="end-date">
         </div>
     </div>
 
-    <div id="p2" class="panel">
-        <div class="row">
-            <div style="grid-column: span 2;">
-                <label>基準日期</label>
-                <input type="date" id="base-date">
-            </div>
-            <div>
-                <label>模式</label>
+    <div class="workday-box">
+        <span class="workday-title">設定工作日（勾選即納入計算）</span>
+        <div class="check-grid" id="weekday-group">
+            <label class="check-item"><input type="checkbox" value="1" checked>週一</label>
+            <label class="check-item"><input type="checkbox" value="2" checked>週二</label>
+            <label class="check-item"><input type="checkbox" value="3" checked>週三</label>
+            <label class="check-item"><input type="checkbox" value="4" checked>週四</label>
+            <label class="check-item"><input type="checkbox" value="5" checked>週五</label>
+            <label class="check-item sat"><input type="checkbox" value="6">週六</label>
+            <label class="check-item sun"><input type="checkbox" value="0">週日</label>
+        </div>
+    </div>
+
+    <div class="res-display res-total">
+        <small>總曆天數（含首尾）</small>
+        <span class="big-val" id="out-total">— 天</span>
+    </div>
+    <div class="res-display res-work">
+        <small>合計工作天</small>
+        <span class="big-val" id="out-work">— 天</span>
+    </div>
+</div>
+
+<!-- ── Panel 2：日期推算 ── -->
+<div id="p2" class="panel">
+    <div class="row">
+        <div style="grid-column: span 2;">
+            <span class="field-label">基準日期</span>
+            <input type="date" id="base-date">
+        </div>
+        <div>
+            <span class="field-label">模式</span>
+            <div class="select-wrap">
                 <select id="calc-mode">
                     <option value="add">加上 (+)</option>
                     <option value="sub">減去 (-)</option>
                 </select>
             </div>
-            <div>
-                <label>天數</label>
-                <input type="number" id="calc-num" value="30">
-            </div>
         </div>
-        <div class="res-display" style="background: white; border: 2px solid var(--primary);">
-            <small>推算日期為</small>
-            <span class="big-val" id="out-date" style="font-size: 1.6rem;">-</span>
+        <div>
+            <span class="field-label">天數</span>
+            <input type="number" id="calc-num" value="30" min="0">
         </div>
     </div>
+    <div class="res-display res-date">
+        <small>推算日期為</small>
+        <span class="big-val" id="out-date">-</span>
+    </div>
+</div>
+```
+
 </div>
 
 <script>
-    // --- 基礎分頁切換 ---
+    // ── 分頁切換 ──
     document.querySelectorAll('.tab-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             document.querySelectorAll('.tab-btn, .panel').forEach(el => el.classList.remove('active'));
@@ -141,74 +442,72 @@
         });
     });
 
-    // --- 初始化日期 ---
-    const todayStr = new Date().toISOString().split('T')[0];
-    const inputs = ['start-date', 'end-date', 'base-date'];
-    inputs.forEach(id => document.getElementById(id).value = todayStr);
+    // ── 本地時間初始化 ──
+    function getTodayLocal() {
+        const d = new Date();
+        const y = d.getFullYear();
+        const m = String(d.getMonth() + 1).padStart(2, '0');
+        const day = String(d.getDate()).padStart(2, '0');
+        return `${y}-${m}-${day}`;
+    }
+    const todayStr = getTodayLocal();
+    ['start-date', 'end-date', 'base-date'].forEach(id => {
+        document.getElementById(id).value = todayStr;
+    });
 
-    // --- 核心計算邏輯 ---
+    // ── 工期計算 ──
     function performCalculation() {
         const startVal = document.getElementById('start-date').value;
-        const endVal = document.getElementById('end-date').value;
-        if(!startVal || !endVal) return;
+        const endVal   = document.getElementById('end-date').value;
+        if (!startVal || !endVal) return;
 
-        let dStart = new Date(startVal + "T00:00:00");
-        let dEnd = new Date(endVal + "T00:00:00");
+        let dStart = new Date(startVal + 'T00:00:00');
+        let dEnd   = new Date(endVal   + 'T00:00:00');
+        if (dStart > dEnd) [dStart, dEnd] = [dEnd, dStart];
 
-        // 自動修正順序
-        if(dStart > dEnd) [dStart, dEnd] = [dEnd, dStart];
+        const totalDays = Math.floor((dEnd - dStart) / 86400000) + 1;
+        document.getElementById('out-total').textContent = totalDays + ' 天';
 
-        // 1. 總天數 (包含首尾)
-        const totalMs = dEnd.getTime() - dStart.getTime();
-        const totalDays = Math.floor(totalMs / 86400000) + 1;
-        document.getElementById('out-total').innerText = totalDays + " 天";
+        const selectedDays = Array.from(
+            document.querySelectorAll('#weekday-group input:checked')
+        ).map(cb => parseInt(cb.value));
 
-        // 2. 工作天計算
-        const selectedWeekdays = Array.from(document.querySelectorAll('#weekday-group input:checked'))
-                                     .map(cb => parseInt(cb.value));
-        
         let workCount = 0;
-        let tempDate = new Date(dStart);
-        
-        // 逐日檢查
-        for(let i = 0; i < totalDays; i++) {
-            if(selectedWeekdays.includes(tempDate.getDay())) {
-                workCount++;
-            }
-            tempDate.setDate(tempDate.getDate() + 1);
+        const cur = new Date(dStart);
+        for (let i = 0; i < totalDays; i++) {
+            if (selectedDays.includes(cur.getDay())) workCount++;
+            cur.setDate(cur.getDate() + 1);
         }
-        document.getElementById('out-work').innerText = workCount + " 天";
+        document.getElementById('out-work').textContent = workCount + ' 天';
     }
 
+    // ── 日期推算 ──
     function performDateCalc() {
         const baseVal = document.getElementById('base-date').value;
-        const mode = document.getElementById('calc-mode').value;
-        const num = parseInt(document.getElementById('calc-num').value) || 0;
-        if(!baseVal) return;
+        const mode    = document.getElementById('calc-mode').value;
+        const num     = Math.abs(parseInt(document.getElementById('calc-num').value) || 0);
+        if (!baseVal) return;
 
-        let resDate = new Date(baseVal + "T00:00:00");
-        resDate.setDate(resDate.getDate() + (mode === 'add' ? num : -num));
-        
+        const d = new Date(baseVal + 'T00:00:00');
+        d.setDate(d.getDate() + (mode === 'add' ? num : -num));
+
         const options = { year: 'numeric', month: '2-digit', day: '2-digit', weekday: 'long' };
-        document.getElementById('out-date').innerText = resDate.toLocaleDateString('zh-TW', options);
+        document.getElementById('out-date').textContent = d.toLocaleDateString('zh-TW', options);
     }
 
-    // --- 事件綁定 ---
-    // 為所有輸入框與勾選框綁定監聽
-    ['start-date', 'end-date'].forEach(id => {
-        document.getElementById(id).addEventListener('change', performCalculation);
-    });
-    
-    document.querySelectorAll('#weekday-group input').forEach(cb => {
-        cb.addEventListener('change', performCalculation);
-    });
-
+    // ── 事件綁定 ──
+    ['start-date', 'end-date'].forEach(id =>
+        document.getElementById(id).addEventListener('change', performCalculation)
+    );
+    document.querySelectorAll('#weekday-group input').forEach(cb =>
+        cb.addEventListener('change', performCalculation)
+    );
     ['base-date', 'calc-mode', 'calc-num'].forEach(id => {
-        document.getElementById(id).addEventListener('input', performDateCalc);
-        document.getElementById(id).addEventListener('change', performDateCalc);
+        const el = document.getElementById(id);
+        el.addEventListener('input', performDateCalc);
+        el.addEventListener('change', performDateCalc);
     });
 
-    // 初始計算一次
     performCalculation();
     performDateCalc();
 </script>
