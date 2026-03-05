@@ -3,186 +3,194 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>極簡時光 - 萬用天數計算機</title>
+    <title>時光維度 - 全功能天數計算機</title>
     <style>
         :root {
-            --primary-gradient: linear-gradient(135deg, #00b4db, #0083b0);
-            --accent-color: #ff9f43;
-            --bg-color: #f4f7f6;
-            --card-bg: #ffffff;
-            --text-main: #2d3436;
-            --text-sub: #636e72;
+            --primary: #4834d4;
+            --secondary: #686de0;
+            --accent: #eb4d4b;
+            --bg: #f0f2f5;
+            --card: #ffffff;
         }
 
         body {
-            font-family: 'PingFang TC', 'Microsoft JhengHei', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-main);
+            font-family: 'PingFang TC', sans-serif;
+            background-color: var(--bg);
             margin: 0;
+            padding: 20px;
             display: flex;
             justify-content: center;
-            align-items: center;
-            min-height: 100vh;
         }
 
-        .container {
-            width: 90%;
-            max-width: 500px;
-            background: var(--card-bg);
-            padding: 30px;
-            border-radius: 24px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        .app-container {
+            width: 100%;
+            max-width: 600px;
+            background: var(--card);
+            border-radius: 30px;
+            padding: 25px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
         }
 
-        h1 {
+        h2 {
             text-align: center;
-            font-size: 1.8rem;
-            background: var(--primary-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 30px;
+            color: var(--primary);
+            letter-spacing: 2px;
+            margin-bottom: 25px;
         }
 
-        .input-group {
-            margin-bottom: 20px;
+        .input-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 25px;
         }
 
         label {
+            font-size: 0.85rem;
+            color: #636e72;
+            margin-bottom: 5px;
             display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: var(--text-sub);
-            font-size: 0.95rem;
+            font-weight: bold;
         }
 
         input[type="date"] {
             width: 100%;
-            padding: 12px 15px;
-            border: 2px solid #edf2f7;
+            padding: 12px;
+            border: 2px solid #dfe6e9;
             border-radius: 12px;
-            font-size: 1.1rem;
-            outline: none;
-            transition: border-color 0.3s;
-            box-sizing: border-box;
-            background-color: #f9fbfb;
-        }
-
-        input[type="date"]:focus {
-            border-color: #00b4db;
-        }
-
-        .result-card {
-            background: var(--primary-gradient);
-            color: white;
-            padding: 25px;
-            border-radius: 20px;
-            text-align: center;
-            margin-top: 30px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .result-label {
             font-size: 1rem;
-            opacity: 0.9;
-            margin-bottom: 10px;
+            box-sizing: border-box;
         }
 
-        .result-value {
-            font-size: 3.5rem;
-            font-weight: 800;
-            display: block;
-            margin: 5px 0;
-        }
-
-        .unit {
-            font-size: 1.2rem;
-            margin-left: 5px;
-        }
-
-        .info-row {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 15px;
-            padding-top: 15px;
-            border-top: 1px solid rgba(255,255,255,0.2);
-            font-size: 0.85rem;
-        }
-
-        .hint {
-            font-size: 0.8rem;
-            color: #a0aec0;
+        .main-display {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 20px;
+            padding: 30px;
+            color: white;
             text-align: center;
-            margin-top: 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 20px rgba(72, 52, 212, 0.2);
         }
 
-        /* Responsive Tweaks */
-        @media (max-width: 480px) {
-            .container { padding: 20px; }
-            .result-value { font-size: 2.8rem; }
+        .main-value {
+            font-size: 4rem;
+            font-weight: 900;
+            line-height: 1;
+        }
+
+        .main-unit { font-size: 1.2rem; margin-left: 5px; }
+
+        /* 多維度網格 */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .stat-box {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 15px;
+            border-left: 5px solid var(--secondary);
+            transition: transform 0.2s;
+        }
+
+        .stat-box:hover { transform: translateY(-3px); }
+
+        .stat-label { font-size: 0.8rem; color: #b2bec3; margin-bottom: 5px; }
+        .stat-value { font-size: 1.1rem; font-weight: bold; color: #2d3436; overflow-wrap: break-word; }
+
+        @media (min-width: 600px) {
+            .stats-grid { grid-template-columns: repeat(3, 1fr); }
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h1>📅 天數計算機</h1>
-    
-    <div class="input-group">
-        <label for="start-date">起始日期</label>
-        <input type="date" id="start-date">
-    </div>
+<div class="app-container">
+    <h2>時光維度計算機</h2>
 
-    <div class="input-group">
-        <label for="end-date">目標日期</label>
-        <input type="date" id="end-date">
-    </div>
-
-    <div class="result-card" id="result-area">
-        <div class="result-label">相隔時間</div>
-        <div class="result-value" id="day-count">0<span class="unit">天</span></div>
-        
-        <div class="info-row">
-            <span id="week-count">約 0 週</span>
-            <span id="include-end">包含首尾：0 天</span>
+    <div class="input-section">
+        <div>
+            <label>起始日期</label>
+            <input type="date" id="date-start">
+        </div>
+        <div>
+            <label>目標日期</label>
+            <input type="date" id="date-end">
         </div>
     </div>
 
-    <p class="hint">系統會自動計算兩日期間的絕對差異值</p>
+    <div class="main-display">
+        <div style="font-size: 0.9rem; opacity: 0.8;">相隔總天數</div>
+        <div class="main-value" id="res-days">0<span class="main-unit">天</span></div>
+    </div>
+
+    <div class="stats-grid">
+        <div class="stat-box">
+            <div class="stat-label">週數 (Weeks)</div>
+            <div class="stat-value" id="res-weeks">0</div>
+        </div>
+        <div class="stat-box" style="border-left-color: #00cec9;">
+            <div class="stat-label">月數 (Months)</div>
+            <div class="stat-value" id="res-months">0</div>
+        </div>
+        <div class="stat-box" style="border-left-color: #fdcb6e;">
+            <div class="stat-label">年數 (Years)</div>
+            <div class="stat-value" id="res-years">0</div>
+        </div>
+        <div class="stat-box" style="border-left-color: #a29bfe;">
+            <div class="stat-label">小時數 (Hours)</div>
+            <div class="stat-value" id="res-hours">0</div>
+        </div>
+        <div class="stat-box" style="border-left-color: #fab1a0;">
+            <div class="stat-label">分鐘數 (Minutes)</div>
+            <div class="stat-value" id="res-mins">0</div>
+        </div>
+        <div class="stat-box" style="border-left-color: #ff7675;">
+            <div class="stat-label">秒數 (Seconds)</div>
+            <div class="stat-value" id="res-secs">0</div>
+        </div>
+    </div>
 </div>
 
 <script>
-    const startInput = document.getElementById('start-date');
-    const endInput = document.getElementById('end-date');
-    const resultDisplay = document.getElementById('day-count');
-    const weekDisplay = document.getElementById('week-count');
-    const includeEndDisplay = document.getElementById('include-end');
+    const d1 = document.getElementById('date-start');
+    const d2 = document.getElementById('date-end');
 
-    // 預設今日
-    const today = new Date().toISOString().split('T')[0];
-    startInput.value = today;
-    endInput.value = today;
+    // 初始化日期
+    const now = new Date();
+    const tomorrow = new Date();
+    tomorrow.setDate(now.getDate() + 1);
+    
+    d1.value = now.toISOString().split('T')[0];
+    d2.value = tomorrow.toISOString().split('T')[0];
 
-    function calculate() {
-        const start = new Date(startInput.value);
-        const end = new Date(endInput.value);
+    function updateAll() {
+        const start = new Date(d1.value);
+        const end = new Date(d2.value);
+        
+        if (isNaN(start) || isNaN(end)) return;
 
-        if (!isNaN(start) && !isNaN(end)) {
-            // 計算毫秒差並轉為天數
-            const diffTime = Math.abs(end - start);
-            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-            
-            // 更新 UI
-            resultDisplay.innerHTML = `${diffDays}<span class="unit">天</span>`;
-            
-            const weeks = (diffDays / 7).toFixed(1);
-            weekDisplay.innerText = `約 ${weeks} 週`;
-            includeEndDisplay.innerText = `包含首尾：${diffDays + 1} 天`;
-        }
+        const diffMs = Math.abs(end - start);
+        const diffDays = diffMs / (1000 * 60 * 60 * 24);
+
+        // 格式化數字輸出
+        const fmt = (num) => num.toLocaleString(undefined, {maximumFractionDigits: 2});
+        const fmtInt = (num) => Math.floor(num).toLocaleString();
+
+        document.getElementById('res-days').innerHTML = `${Math.floor(diffDays)}<span class="main-unit">天</span>`;
+        document.getElementById('res-weeks').innerText = fmt(diffDays / 7);
+        document.getElementById('res-months').innerText = fmt(diffDays / 30.4375);
+        document.getElementById('res-years').innerText = fmt(diffDays / 365.25);
+        document.getElementById('res-hours').innerText = fmtInt(diffDays * 24);
+        document.getElementById('res-mins').innerText = fmtInt(diffDays * 1440);
+        document.getElementById('res-secs').innerText = fmtInt(diffDays * 86400);
     }
 
-    startInput.addEventListener('change', calculate);
-    endInput.addEventListener('change', calculate);
+    d1.addEventListener('change', updateAll);
+    d2.addEventListener('change', updateAll);
+    updateAll(); // 初始計算
 </script>
 
 </body>
