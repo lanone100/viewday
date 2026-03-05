@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>極簡時光 - 萬用天數計算機</title>
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #00b4db, #0083b0);
+            --accent-color: #ff9f43;
+            --bg-color: #f4f7f6;
+            --card-bg: #ffffff;
+            --text-main: #2d3436;
+            --text-sub: #636e72;
+        }
+
+        body {
+            font-family: 'PingFang TC', 'Microsoft JhengHei', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 500px;
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 24px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 1.8rem;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 30px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-sub);
+            font-size: 0.95rem;
+        }
+
+        input[type="date"] {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #edf2f7;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            outline: none;
+            transition: border-color 0.3s;
+            box-sizing: border-box;
+            background-color: #f9fbfb;
+        }
+
+        input[type="date"]:focus {
+            border-color: #00b4db;
+        }
+
+        .result-card {
+            background: var(--primary-gradient);
+            color: white;
+            padding: 25px;
+            border-radius: 20px;
+            text-align: center;
+            margin-top: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .result-label {
+            font-size: 1rem;
+            opacity: 0.9;
+            margin-bottom: 10px;
+        }
+
+        .result-value {
+            font-size: 3.5rem;
+            font-weight: 800;
+            display: block;
+            margin: 5px 0;
+        }
+
+        .unit {
+            font-size: 1.2rem;
+            margin-left: 5px;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            font-size: 0.85rem;
+        }
+
+        .hint {
+            font-size: 0.8rem;
+            color: #a0aec0;
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        /* Responsive Tweaks */
+        @media (max-width: 480px) {
+            .container { padding: 20px; }
+            .result-value { font-size: 2.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>📅 天數計算機</h1>
+    
+    <div class="input-group">
+        <label for="start-date">起始日期</label>
+        <input type="date" id="start-date">
+    </div>
+
+    <div class="input-group">
+        <label for="end-date">目標日期</label>
+        <input type="date" id="end-date">
+    </div>
+
+    <div class="result-card" id="result-area">
+        <div class="result-label">相隔時間</div>
+        <div class="result-value" id="day-count">0<span class="unit">天</span></div>
+        
+        <div class="info-row">
+            <span id="week-count">約 0 週</span>
+            <span id="include-end">包含首尾：0 天</span>
+        </div>
+    </div>
+
+    <p class="hint">系統會自動計算兩日期間的絕對差異值</p>
+</div>
+
+<script>
+    const startInput = document.getElementById('start-date');
+    const endInput = document.getElementById('end-date');
+    const resultDisplay = document.getElementById('day-count');
+    const weekDisplay = document.getElementById('week-count');
+    const includeEndDisplay = document.getElementById('include-end');
+
+    // 預設今日
+    const today = new Date().toISOString().split('T')[0];
+    startInput.value = today;
+    endInput.value = today;
+
+    function calculate() {
+        const start = new Date(startInput.value);
+        const end = new Date(endInput.value);
+
+        if (!isNaN(start) && !isNaN(end)) {
+            // 計算毫秒差並轉為天數
+            const diffTime = Math.abs(end - start);
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            
+            // 更新 UI
+            resultDisplay.innerHTML = `${diffDays}<span class="unit">天</span>`;
+            
+            const weeks = (diffDays / 7).toFixed(1);
+            weekDisplay.innerText = `約 ${weeks} 週`;
+            includeEndDisplay.innerText = `包含首尾：${diffDays + 1} 天`;
+        }
+    }
+
+    startInput.addEventListener('change', calculate);
+    endInput.addEventListener('change', calculate);
+</script>
+
+</body>
+</html>
