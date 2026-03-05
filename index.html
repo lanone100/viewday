@@ -2,234 +2,225 @@
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TimeMaster Pro - 專業工期計算機</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>TimeMaster Pro 2.0 - 響應式計算方案</title>
     <style>
         :root {
-            --bg: #f0f4f8;
             --primary: #4a69bd;
-            --workday: #218c74;
+            --secondary: #218c74;
+            --bg: #f4f7f6;
             --card: #ffffff;
-            --text: #2d3436;
+            --border: #e2e8f0;
         }
 
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
         body {
-            font-family: 'PingFang TC', system-ui, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             background-color: var(--bg);
             margin: 0;
-            padding: 15px;
+            padding: 10px;
             display: flex;
             justify-content: center;
+            line-height: 1.5;
         }
 
         .container {
             width: 100%;
-            max-width: 650px;
+            max-width: 600px;
             background: var(--card);
-            border-radius: 24px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
             overflow: hidden;
-            padding-bottom: 20px;
         }
 
-        .tabs { display: flex; background: #e2e8f0; padding: 5px; gap: 5px; }
+        /* 響應式 Tabs */
+        .tabs { display: flex; background: #edf2f7; padding: 5px; }
         .tab-btn {
-            flex: 1; padding: 12px; border: none; background: none;
-            cursor: pointer; font-weight: bold; border-radius: 12px;
-            color: #64748b; transition: 0.3s;
+            flex: 1; padding: 12px 5px; border: none; background: none;
+            cursor: pointer; font-weight: 600; border-radius: 10px;
+            color: #718096; transition: 0.2s; font-size: 0.95rem;
         }
-        .tab-btn.active { background: var(--card); color: var(--primary); }
+        .tab-btn.active { background: var(--card); color: var(--primary); box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
 
-        .content-panel { display: none; padding: 25px; animation: fadeIn 0.3s ease; }
-        .content-panel.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .panel { display: none; padding: 20px; }
+        .panel.active { display: block; }
 
-        .form-row { margin-bottom: 20px; }
-        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        /* 表格與表單適配 */
+        .input-group { display: flex; flex-direction: column; gap: 15px; margin-bottom: 20px; }
+        .row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
 
-        label { display: block; font-size: 0.85rem; margin-bottom: 8px; color: #475569; font-weight: 600; }
+        label { font-size: 0.85rem; color: #4a5568; margin-bottom: 5px; display: block; font-weight: bold; }
         input, select {
-            width: 100%; padding: 12px; border: 2px solid #f1f5f9;
-            border-radius: 12px; font-size: 1rem; box-sizing: border-box;
+            width: 100%; padding: 12px; border: 2px solid var(--border);
+            border-radius: 10px; font-size: 1rem; appearance: none;
         }
+        input:focus { border-color: var(--primary); outline: none; }
 
-        /* 工作日勾選區 */
-        .workday-selector {
-            background: #f8fafc;
-            padding: 15px;
-            border-radius: 15px;
-            margin-bottom: 20px;
+        /* 勾選框網格修復 */
+        .workday-box {
+            background: #f8fafc; padding: 15px; border-radius: 12px; margin-bottom: 20px;
+            border: 1px solid var(--border);
         }
         .check-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
             gap: 10px;
         }
         .check-item {
-            display: flex;
-            align-items: center;
-            font-size: 0.85rem;
-            cursor: pointer;
+            display: flex; align-items: center; font-size: 0.85rem;
+            cursor: pointer; background: white; padding: 5px 8px;
+            border-radius: 6px; border: 1px solid var(--border);
         }
         .check-item input { width: auto; margin-right: 5px; }
 
-        /* 結果區 */
-        .result-box {
-            padding: 20px; border-radius: 18px; text-align: center;
-            margin-top: 10px; border: 2px solid #e2e8f0;
+        /* 結果顯示區 */
+        .res-display {
+            text-align: center; padding: 20px; border-radius: 15px;
+            background: #f1f5f9; margin-bottom: 10px;
         }
-        .work-res {
-            background: linear-gradient(135deg, #218c74, #1b6d5a);
-            color: white; border: none; margin-top: 15px;
-        }
-        .big-text { font-size: 2.2rem; font-weight: 800; display: block; }
-        .unit { font-size: 1rem; font-weight: normal; margin-left: 5px; }
+        .big-val { font-size: 2.5rem; font-weight: 800; color: var(--primary); display: block; word-break: break-all; }
+        .work-val { background: var(--secondary); color: white; margin-top: 10px; }
+        .work-val .big-val { color: white; }
 
-        @media (max-width: 480px) {
-            .check-grid { grid-template-columns: repeat(3, 1fr); }
+        /* 手機端微調 */
+        @media (max-width: 400px) {
+            .row { grid-template-columns: 1fr; }
+            .big-val { font-size: 2rem; }
+            .tab-btn { font-size: 0.85rem; }
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <div class="tabs">
-        <button class="tab-btn active" onclick="openTab(event, 'diff')">相隔天數/工期</button>
-        <button class="tab-btn" onclick="openTab(event, 'calc')">日期推算</button>
-    </div>
+    <nav class="tabs">
+        <button class="tab-btn active" onclick="switchTab(event, 'p1')">天數計算</button>
+        <button class="tab-btn" onclick="switchTab(event, 'p2')">日期推算</button>
+    </nav>
 
-    <div id="diff" class="content-panel active">
-        <div class="grid-2">
-            <div class="form-row">
+    <div id="p1" class="panel active">
+        <div class="row">
+            <div>
                 <label>開始日期</label>
-                <input type="date" id="d-start" onchange="runAllCalc()">
+                <input type="date" id="start-d" onchange="calculate()">
             </div>
-            <div class="form-row">
+            <div>
                 <label>結束日期</label>
-                <input type="date" id="d-end" onchange="runAllCalc()">
+                <input type="date" id="end-d" onchange="calculate()">
             </div>
         </div>
 
-        <div class="workday-selector">
-            <label>設定工作日 (勾選後計算工作天)</label>
+        <div class="workday-box">
+            <label>自訂工作日 (勾選包含項目)</label>
             <div class="check-grid">
-                <label class="check-item"><input type="checkbox" value="1" checked onchange="runAllCalc()">週一</label>
-                <label class="check-item"><input type="checkbox" value="2" checked onchange="runAllCalc()">週二</label>
-                <label class="check-item"><input type="checkbox" value="3" checked onchange="runAllCalc()">週三</label>
-                <label class="check-item"><input type="checkbox" value="4" checked onchange="runAllCalc()">週四</label>
-                <label class="check-item"><input type="checkbox" value="5" checked onchange="runAllCalc()">週五</label>
-                <label class="check-item"><input type="checkbox" value="6" onchange="runAllCalc()">週六</label>
-                <label class="check-item"><input type="checkbox" value="0" onchange="runAllCalc()">週日</label>
+                <label class="check-item"><input type="checkbox" value="1" checked onchange="calculate()">一</label>
+                <label class="check-item"><input type="checkbox" value="2" checked onchange="calculate()">二</label>
+                <label class="check-item"><input type="checkbox" value="3" checked onchange="calculate()">三</label>
+                <label class="check-item"><input type="checkbox" value="4" checked onchange="calculate()">四</label>
+                <label class="check-item"><input type="checkbox" value="5" checked onchange="calculate()">五</label>
+                <label class="check-item"><input type="checkbox" value="6" onchange="calculate()">六</label>
+                <label class="check-item"><input type="checkbox" value="0" onchange="calculate()">日</label>
             </div>
         </div>
 
-        <div class="result-box">
-            <span style="color: #64748b;">總曆天數 (含假日)</span>
-            <span class="big-text" id="total-days" style="color: var(--primary);">0<span class="unit">天</span></span>
+        <div class="res-display">
+            <small>總曆天數</small>
+            <span class="big-val" id="res-total">0 天</span>
         </div>
-
-        <div class="result-box work-res">
-            <span style="opacity: 0.9;">計算工作天數</span>
-            <span class="big-text" id="work-days">0<span class="unit">工作天</span></span>
-            <div style="font-size: 0.8rem; margin-top: 5px; opacity: 0.8;">(僅包含勾選的星期)</div>
+        <div class="res-display work-val">
+            <small>合計工作天</small>
+            <span class="big-val" id="res-work">0 天</span>
         </div>
     </div>
 
-    <div id="calc" class="content-panel">
-        <div class="form-row">
-            <label>基準日期</label>
-            <input type="date" id="c-base" onchange="calcTargetDate()">
-        </div>
-        <div class="grid-2">
-            <div class="form-row">
-                <label>操作</label>
-                <select id="c-op" onchange="calcTargetDate()">
-                    <option value="add">加上 (+)</option>
-                    <option value="sub">減去 (-)</option>
-                </select>
+    <div id="p2" class="panel">
+        <div class="input-group">
+            <div>
+                <label>基準日期</label>
+                <input type="date" id="base-d" onchange="calcDate()">
             </div>
-            <div class="form-row">
-                <label>天數</label>
-                <input type="number" id="c-days" value="10" oninput="calcTargetDate()">
+            <div class="row">
+                <div>
+                    <label>計算模式</label>
+                    <select id="mode" onchange="calcDate()">
+                        <option value="add">加上 (+)</option>
+                        <option value="sub">減去 (-)</option>
+                    </select>
+                </div>
+                <div>
+                    <label>天數</label>
+                    <input type="number" id="num-d" value="30" oninput="calcDate()">
+                </div>
             </div>
         </div>
-        <div class="result-box" style="border-color: var(--primary);">
-            <div style="font-size: 0.9rem; color: #747d8c;">推算結果</div>
-            <div class="big-text" id="calc-res" style="color: var(--primary); font-size: 1.8rem;">-</div>
+        <div class="res-display" style="border: 2px solid var(--primary); background: white;">
+            <small>推算日期為</small>
+            <span class="big-val" id="res-date" style="font-size: 1.5rem;">-</span>
         </div>
     </div>
 </div>
 
 <script>
-    function openTab(evt, tabName) {
-        let contents = document.getElementsByClassName("content-panel");
-        for (let i = 0; i < contents.length; i++) contents[i].classList.remove("active");
-        let tabs = document.getElementsByClassName("tab-btn");
-        for (let i = 0; i < tabs.length; i++) tabs[i].classList.remove("active");
-        document.getElementById(tabName).classList.add("active");
-        evt.currentTarget.classList.add("active");
+    function switchTab(e, id) {
+        document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+        e.currentTarget.classList.add('active');
     }
 
-    // 初始化日期
-    const today = new Date();
-    document.getElementById('d-start').valueAsDate = today;
-    document.getElementById('d-end').valueAsDate = today;
-    document.getElementById('c-base').valueAsDate = today;
+    // 初始化日期字串 (避免時區偏移)
+    const getToday = () => new Date().toISOString().split('T')[0];
+    document.getElementById('start-d').value = getToday();
+    document.getElementById('end-d').value = getToday();
+    document.getElementById('base-d').value = getToday();
 
-    function runAllCalc() {
-        const startStr = document.getElementById('d-start').value;
-        const endStr = document.getElementById('d-end').value;
-        if (!startStr || !endStr) return;
+    function calculate() {
+        const sVal = document.getElementById('start-d').value;
+        const eVal = document.getElementById('end-d').value;
+        if(!sVal || !eVal) return;
 
-        let start = new Date(startStr);
-        let end = new Date(endStr);
+        let s = new Date(sVal);
+        let e = new Date(eVal);
+        const isReverse = s > e;
+        if(isReverse) [s, e] = [e, s];
+
+        // 總天數
+        const diff = Math.floor((e - s) / 86400000);
+        document.getElementById('res-total').innerText = (diff + 1) + " 天";
+
+        // 工作天計算 (優化算法)
+        const checks = Array.from(document.querySelectorAll('.check-grid input:checked')).map(i => parseInt(i.value));
+        let workCount = 0;
+        let cur = new Date(s);
         
-        // 確保 start 小於 end，若反過來則交換
-        let reverse = false;
-        if (start > end) {
-            [start, end] = [end, start];
-            reverse = true;
+        // 安全機制：限制最大計算 36500 天 (約100年)
+        let safety = 0;
+        while(cur <= e && safety < 36500) {
+            if(checks.includes(cur.getDay())) workCount++;
+            cur.setDate(cur.getDate() + 1);
+            safety++;
         }
-
-        // 1. 計算總曆天數
-        const diffTime = Math.abs(end - start);
-        const totalDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-        document.getElementById('total-days').innerHTML = `${totalDays}<span class="unit">天</span>`;
-
-        // 2. 計算工作天 (需考慮勾選的星期)
-        const checkboxes = document.querySelectorAll('.check-grid input:checked');
-        const allowedDays = Array.from(checkboxes).map(cb => parseInt(cb.value));
-        
-        let workDays = 0;
-        let current = new Date(start);
-        
-        // 迴圈計算範圍內的每一天 (包含首尾)
-        // 注意：這裡採用「包含首天，直到當天結束」的工期邏輯
-        while (current <= end) {
-            if (allowedDays.includes(current.getDay())) {
-                workDays++;
-            }
-            current.setDate(current.getDate() + 1);
-        }
-
-        // 如果起始與結束是同一天，且是工作日，則為1天；若計算間隔則需視需求調整
-        // 這裡採用的是「包含當天」的工期計算模式
-        document.getElementById('work-days').innerHTML = `${workDays}<span class="unit">工作天</span>`;
+        document.getElementById('res-work').innerText = workCount + " 天";
     }
 
-    function calcTargetDate() {
-        const base = new Date(document.getElementById('c-base').value);
-        const op = document.getElementById('c-op').value;
-        const days = parseInt(document.getElementById('c-days').value) || 0;
-        const result = new Date(base);
-        result.setDate(base.getDate() + (op === 'add' ? days : -days));
-        const opt = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' };
-        document.getElementById('calc-res').innerText = result.toLocaleDateString('zh-TW', opt);
+    function calcDate() {
+        const base = new Date(document.getElementById('base-d').value);
+        const mode = document.getElementById('mode').value;
+        const num = parseInt(document.getElementById('num-d').value) || 0;
+        
+        if(isNaN(base.getTime())) return;
+        
+        const res = new Date(base);
+        res.setDate(base.getDate() + (mode === 'add' ? num : -num));
+        
+        const options = { year: 'numeric', month: '2-digit', day: '2-digit', weekday: 'short' };
+        document.getElementById('res-date').innerText = res.toLocaleDateString('zh-TW', options);
     }
 
-    // 初始執行
-    runAllCalc();
-    calcTargetDate();
+    // 初始載入
+    calculate();
+    calcDate();
 </script>
 
 </body>
