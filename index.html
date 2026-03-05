@@ -2,356 +2,356 @@
 
 <html lang="zh-TW">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>TimeMaster Pro 2.1</title>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Sora:wght@400;600;800&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            /* ── 色盤 ── */
-            --bg-deep:    #0d0f1a;
-            --bg-mid:     #13172a;
-            --bg-card:    #1a1f35;
-            --bg-input:   #111428;
-            --bg-section: #0f1220;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>TimeMaster Pro 2.1</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Sora:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root {
+    /* ── 蒂芙尼藍主色盤 ── */
+    --tiffany:       #0abab5;
+    --tiffany-light: #81d8d0;
+    --tiffany-pale:  #b2eae7;
+    --tiffany-mist:  #e0f7f6;
+    --tiffany-deep:  #077a76;
 
 ```
-        --accent-gold:   #f5a623;
-        --accent-orange: #ff6b35;
-        --accent-cyan:   #00d4ff;
-        --accent-violet: #7c5cbf;
-        --accent-rose:   #f43f5e;
-        --accent-lime:   #84cc16;
+--bg-deep:    #c8efed;
+--bg-mid:     #edfaf9;
+--bg-card:    #ffffff;
+--bg-input:   #f0fbfa;
+--bg-section: #e4f8f7;
 
-        --grad-tab:    linear-gradient(135deg, #f5a623 0%, #ff6b35 100%);
-        --grad-total:  linear-gradient(135deg, #1a2a4a 0%, #1e3a5f 100%);
-        --grad-work:   linear-gradient(135deg, #1a3a2a 0%, #164430 100%);
-        --grad-date:   linear-gradient(135deg, #2a1a3a 0%, #3a1f5a 100%);
-        --grad-header: linear-gradient(180deg, #1a1f35 0%, #13172a 100%);
+--accent-gold:   #e8a020;
+--accent-orange: #f4845f;
+--accent-cyan:   #0abab5;
+--accent-violet: #6c63b8;
+--accent-rose:   #e85d7a;
+--accent-lime:   #3ab56a;
 
-        --text-bright: #f0f4ff;
-        --text-mid:    #8892b0;
-        --text-dim:    #4a5568;
-        --border-dim:  rgba(255,255,255,0.07);
-        --border-glow: rgba(245,166,35,0.35);
-    }
+--grad-tab:    linear-gradient(135deg, #0abab5 0%, #077a76 100%);
+--grad-total:  linear-gradient(135deg, #d6f5f3 0%, #b2eae7 100%);
+--grad-work:   linear-gradient(135deg, #d4f5e2 0%, #b8edd0 100%);
+--grad-date:   linear-gradient(135deg, #e8e4f8 0%, #d4cef5 100%);
+--grad-header: linear-gradient(180deg, #ffffff 0%, #edfaf9 100%);
 
-    *, *::before, *::after {
-        box-sizing: border-box;
-        -webkit-tap-highlight-color: transparent;
-        min-width: 0;
-    }
-    html, body {
-        width: 100%; max-width: 100%;
-        overflow-x: hidden; margin: 0;
-    }
-    body {
-        font-family: 'Sora', sans-serif;
-        background: var(--bg-deep);
-        /* 微噪點質感背景 */
-        background-image:
-            radial-gradient(ellipse 80% 50% at 50% -20%, rgba(124,92,191,0.18) 0%, transparent 60%),
-            radial-gradient(ellipse 60% 40% at 80% 110%, rgba(245,166,35,0.10) 0%, transparent 55%);
-        padding: 14px;
-        display: flex;
-        justify-content: center;
-        align-items: flex-start;
-        min-height: 100vh;
-    }
+--text-bright: #0d4a48;
+--text-mid:    #3a8a87;
+--text-dim:    #8abcba;
+--border-dim:  rgba(10,186,181,0.2);
+```
 
-    /* ── 外殼容器 ── */
-    .container {
-        width: 100%; max-width: 560px;
-        border-radius: 24px;
-        overflow: hidden;
-        border: 1px solid var(--border-dim);
-        box-shadow:
-            0 0 0 1px rgba(245,166,35,0.08),
-            0 24px 60px rgba(0,0,0,0.6),
-            0 4px 16px rgba(0,0,0,0.4);
-    }
+}
 
-    /* ── 頂部 Header ── */
-    .header {
-        background: var(--grad-header);
-        padding: 18px 20px 0;
-        border-bottom: 1px solid var(--border-dim);
-    }
-    .header-title {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        margin-bottom: 14px;
-    }
-    .header-icon {
-        width: 36px; height: 36px;
-        border-radius: 10px;
-        background: var(--grad-tab);
-        display: flex; align-items: center; justify-content: center;
-        font-size: 1.1rem;
-        box-shadow: 0 4px 12px rgba(245,166,35,0.4);
-    }
-    .header-text h1 {
-        font-size: 1rem; font-weight: 800;
-        color: var(--text-bright);
-        margin: 0; letter-spacing: 0.02em;
-    }
-    .header-text p {
-        font-size: 0.7rem; color: var(--text-mid);
-        margin: 0; font-family: 'DM Mono', monospace;
-        letter-spacing: 0.05em;
-    }
+*, *::before, *::after { box-sizing: border-box; -webkit-tap-highlight-color: transparent; min-width: 0; }
+html, body { width: 100%; max-width: 100%; overflow-x: hidden; margin: 0; }
 
-    /* ── 分頁列 ── */
-    .tabs {
-        display: flex;
-        gap: 4px;
-        padding: 0 0 0 0;
-    }
-    .tab-btn {
-        flex: 1;
-        padding: 11px 8px;
-        border: none;
-        background: none;
-        cursor: pointer;
-        font-family: 'Sora', sans-serif;
-        font-weight: 600;
-        font-size: 0.82rem;
-        color: var(--text-mid);
-        border-bottom: 2px solid transparent;
-        transition: color 0.2s, border-color 0.2s;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        letter-spacing: 0.02em;
-    }
-    .tab-btn.active {
-        color: var(--accent-gold);
-        border-bottom-color: var(--accent-gold);
-    }
+body {
+font-family: ‘Sora’, sans-serif;
+background: var(–bg-deep);
+background-image:
+radial-gradient(ellipse 80% 50% at 50% -20%, rgba(10,186,181,0.25) 0%, transparent 60%),
+radial-gradient(ellipse 60% 40% at 80% 110%, rgba(7,122,118,0.15) 0%, transparent 55%);
+padding: 14px;
+display: flex; justify-content: center; align-items: flex-start;
+min-height: 100vh;
+}
 
-    /* ── 面板 ── */
-    .panel { display: none; padding: 18px; background: var(--bg-mid); }
-    .panel.active { display: block; }
+.container {
+width: 100%; max-width: 560px;
+border-radius: 24px; overflow: hidden;
+border: 1px solid var(–border-dim);
+box-shadow: 0 0 0 1px rgba(10,186,181,0.2), 0 24px 60px rgba(7,122,118,0.2), 0 4px 16px rgba(10,186,181,0.1);
+}
 
-    /* ── 雙欄格線 ── */
-    .row {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 12px;
-        margin-bottom: 14px;
-        width: 100%;
-    }
+/* ── Header ── */
+.header {
+background: var(–grad-header);
+padding: 18px 20px 0;
+border-bottom: 1px solid var(–border-dim);
+}
+.header-title { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+.header-icon {
+width: 36px; height: 36px; border-radius: 10px;
+background: var(–grad-tab);
+display: flex; align-items: center; justify-content: center;
+font-size: 1.1rem; box-shadow: 0 4px 12px rgba(10,186,181,0.45);
+flex-shrink: 0;
+}
+.header-text h1 { font-size: 1rem; font-weight: 800; color: var(–text-bright); margin: 0; letter-spacing: 0.02em; }
+.header-text p  { font-size: 0.7rem; color: var(–text-mid); margin: 0; font-family: ‘DM Mono’, monospace; letter-spacing: 0.05em; }
 
-    /* ── 欄位標籤 ── */
-    .field-label {
-        font-size: 0.72rem;
-        color: var(--text-mid);
-        margin-bottom: 6px;
-        display: block;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.08em;
-        font-family: 'DM Mono', monospace;
-    }
+.tabs { display: flex; gap: 4px; }
+.tab-btn {
+flex: 1; padding: 11px 8px; border: none; background: none; cursor: pointer;
+font-family: ‘Sora’, sans-serif; font-weight: 600; font-size: 0.82rem;
+color: var(–text-mid); border-bottom: 2px solid transparent;
+transition: color 0.2s, border-color 0.2s;
+white-space: nowrap; overflow: hidden; text-overflow: ellipsis; letter-spacing: 0.02em;
+}
+.tab-btn.active { color: var(–tiffany-deep); border-bottom-color: var(–tiffany); }
 
-    /* ── 輸入框 ── */
-    input[type="date"],
-    input[type="number"],
-    select {
-        width: 100%; max-width: 100%;
-        padding: 10px 12px;
-        border: 1.5px solid var(--border-dim);
-        border-radius: 10px;
-        font-size: 0.92rem;
-        font-family: 'DM Mono', monospace;
-        color: var(--text-bright);
-        background: var(--bg-input);
-        -webkit-appearance: none;
-        appearance: none;
-        transition: border-color 0.2s, box-shadow 0.2s;
-        /* 讓日期選擇器顏色跟隨主題 */
-        color-scheme: dark;
-    }
-    input[type="date"]:focus,
-    input[type="number"]:focus,
-    select:focus {
-        outline: none;
-        border-color: var(--accent-gold);
-        box-shadow: 0 0 0 3px rgba(245,166,35,0.15);
-    }
-    input[type="number"]::-webkit-inner-spin-button { opacity: 1; }
+/* ── Panels ── */
+.panel { display: none; padding: 16px; background: var(–bg-mid); }
+.panel.active { display: block; }
 
-    .select-wrap { position: relative; }
-    .select-wrap::after {
-        content: "▾";
-        position: absolute;
-        right: 11px; top: 50%;
-        transform: translateY(-50%);
-        pointer-events: none;
-        color: var(--accent-gold);
-        font-size: 0.85rem;
-    }
+/* ── Field label ── */
+.field-label {
+font-size: 0.7rem; color: var(–text-mid); margin-bottom: 5px;
+display: block; font-weight: 600; text-transform: uppercase;
+letter-spacing: 0.08em; font-family: ‘DM Mono’, monospace;
+}
 
-    /* ── 工作日勾選區 ── */
-    .workday-box {
-        background: var(--bg-section);
-        padding: 13px;
-        border-radius: 14px;
-        margin-bottom: 14px;
-        border: 1px solid var(--border-dim);
-        width: 100%; overflow: hidden;
-    }
-    .workday-title {
-        font-size: 0.72rem;
-        color: var(--text-mid);
-        margin-bottom: 10px;
-        display: block;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.08em;
-        font-family: 'DM Mono', monospace;
-    }
-    .check-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(66px, 1fr));
-        gap: 7px;
-        width: 100%;
-    }
-    /* 每個星期對應不同強調色 */
-    .check-item {
-        display: flex !important;
-        align-items: center;
-        font-size: 0.8rem;
-        cursor: pointer;
-        background: var(--bg-card);
-        padding: 7px 6px;
-        border-radius: 8px;
-        border: 1.5px solid var(--border-dim);
-        user-select: none;
-        font-weight: 600;
-        color: var(--text-mid);
-        margin-bottom: 0;
-        overflow: hidden;
-        white-space: nowrap;
-        transition: border-color 0.15s, color 0.15s, background 0.15s;
-        font-family: 'Sora', sans-serif;
-    }
-    .check-item:has(input:checked) {
-        background: rgba(245,166,35,0.08);
-        border-color: rgba(245,166,35,0.5);
-        color: var(--accent-gold);
-    }
-    /* 週六週日特殊色 */
-    .check-item.sat:has(input:checked) {
-        background: rgba(0,212,255,0.08);
-        border-color: rgba(0,212,255,0.5);
-        color: var(--accent-cyan);
-    }
-    .check-item.sun:has(input:checked) {
-        background: rgba(244,63,94,0.08);
-        border-color: rgba(244,63,94,0.5);
-        color: var(--accent-rose);
-    }
-    .check-item input[type="checkbox"] {
-        width: 14px; height: 14px;
-        cursor: pointer;
-        margin-right: 5px;
-        flex-shrink: 0;
-        accent-color: var(--accent-gold);
-    }
-    .check-item.sat input[type="checkbox"] { accent-color: var(--accent-cyan); }
-    .check-item.sun input[type="checkbox"] { accent-color: var(--accent-rose); }
+/* ── Inputs ── */
+input[type=“date”], input[type=“number”], select {
+width: 100%; max-width: 100%; padding: 9px 11px;
+border: 1.5px solid var(–border-dim); border-radius: 10px;
+font-size: 0.88rem; font-family: ‘DM Mono’, monospace;
+color: var(–text-bright); background: var(–bg-input);
+-webkit-appearance: none; appearance: none;
+transition: border-color 0.2s, box-shadow 0.2s; color-scheme: light;
+}
+input[type=“date”]:focus, input[type=“number”]:focus, select:focus {
+outline: none; border-color: var(–tiffany);
+box-shadow: 0 0 0 3px rgba(10,186,181,0.18);
+}
+input[type=“number”]::-webkit-inner-spin-button { opacity: 1; }
+.select-wrap { position: relative; }
+.select-wrap::after {
+content: “▾”; position: absolute; right: 11px; top: 50%;
+transform: translateY(-50%); pointer-events: none;
+color: var(–tiffany-deep); font-size: 0.85rem;
+}
 
-    /* ── 結果卡片 ── */
-    .res-display {
-        text-align: center;
-        padding: 20px 14px;
-        border-radius: 16px;
-        margin-bottom: 10px;
-        border: 1px solid var(--border-dim);
-        width: 100%;
-        overflow: hidden;
-        position: relative;
-    }
-    /* 總天數：深藍漸層 + 左側裝飾光條 */
-    .res-total {
-        background: var(--grad-total);
-        border-color: rgba(0,212,255,0.2);
-    }
-    .res-total::before {
-        content: '';
-        position: absolute;
-        left: 0; top: 0; bottom: 0; width: 3px;
-        background: linear-gradient(180deg, var(--accent-cyan), var(--accent-violet));
-        border-radius: 16px 0 0 16px;
-    }
-    /* 工作天：深綠漸層 + 左側光條 */
-    .res-work {
-        background: var(--grad-work);
-        border-color: rgba(132,204,22,0.2);
-    }
-    .res-work::before {
-        content: '';
-        position: absolute;
-        left: 0; top: 0; bottom: 0; width: 3px;
-        background: linear-gradient(180deg, var(--accent-lime), #22c55e);
-        border-radius: 16px 0 0 16px;
-    }
-    /* 日期推算：深紫漸層 + 左側光條 */
-    .res-date {
-        background: var(--grad-date);
-        border-color: rgba(124,92,191,0.3);
-    }
-    .res-date::before {
-        content: '';
-        position: absolute;
-        left: 0; top: 0; bottom: 0; width: 3px;
-        background: linear-gradient(180deg, var(--accent-violet), var(--accent-rose));
-        border-radius: 16px 0 0 16px;
-    }
+/* ── Date input row ── */
+.date-row {
+display: grid; grid-template-columns: 1fr 1fr;
+gap: 10px; margin-bottom: 12px; width: 100%;
+}
 
-    .res-display small {
-        display: block;
-        font-size: 0.7rem;
-        font-family: 'DM Mono', monospace;
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-        margin-bottom: 6px;
-    }
-    .res-total small  { color: var(--accent-cyan); }
-    .res-work small   { color: var(--accent-lime); }
-    .res-date small   { color: #b794f4; }
+/* ── 月曆容器 ── */
+.cal-wrap {
+background: var(–bg-section);
+border-radius: 16px; border: 1px solid var(–border-dim);
+padding: 12px; margin-bottom: 12px; overflow: hidden;
+}
 
-    .big-val {
-        font-size: 2.4rem;
-        font-weight: 800;
-        display: block;
-        word-break: break-word;
-        line-height: 1.1;
-        font-family: 'DM Mono', monospace;
-    }
-    .res-total .big-val { color: var(--accent-cyan); text-shadow: 0 0 20px rgba(0,212,255,0.4); }
-    .res-work  .big-val { color: var(--accent-lime); text-shadow: 0 0 20px rgba(132,204,22,0.4); }
-    .res-date  .big-val { color: #c4b5fd; text-shadow: 0 0 20px rgba(124,92,191,0.4); font-size: 1.4rem; line-height: 1.4; }
+/* 月曆導航列 */
+.cal-nav {
+display: flex; align-items: center; justify-content: space-between;
+margin-bottom: 10px;
+}
+.cal-nav-title {
+font-size: 0.88rem; font-weight: 700; color: var(–text-bright);
+font-family: ‘DM Mono’, monospace; letter-spacing: 0.04em;
+text-align: center; flex: 1;
+}
+.cal-nav-btn {
+width: 30px; height: 30px; border: none;
+background: var(–bg-section); border-radius: 8px;
+color: var(–tiffany); font-size: 1rem;
+cursor: pointer; display: flex; align-items: center; justify-content: center;
+flex-shrink: 0; transition: background 0.15s;
+}
+.cal-nav-btn:hover { background: rgba(10,186,181,0.18); }
 
-    /* ── RWD ── */
-    @media (max-width: 400px) {
-        body { padding: 8px; }
-        .panel { padding: 13px; }
-        .row { grid-template-columns: 1fr; gap: 10px; }
-        .big-val { font-size: 2rem; }
-        .res-date .big-val { font-size: 1.2rem; }
-    }
+/* 星期標題列 */
+.cal-weekdays {
+display: grid; grid-template-columns: repeat(7, 1fr);
+margin-bottom: 4px;
+}
+.cal-wday {
+text-align: center; font-size: 0.65rem;
+font-family: ‘DM Mono’, monospace; font-weight: 500;
+padding: 4px 0; letter-spacing: 0.06em;
+}
+.cal-wday.mon,.cal-wday.tue,.cal-wday.wed,.cal-wday.thu,.cal-wday.fri { color: var(–text-mid); }
+.cal-wday.sat { color: var(–accent-cyan); }
+.cal-wday.sun { color: var(–accent-rose); }
+
+/* 日期格子 */
+.cal-grid {
+display: grid; grid-template-columns: repeat(7, 1fr);
+gap: 2px;
+}
+.cal-day {
+aspect-ratio: 1; display: flex; align-items: center; justify-content: center;
+font-size: 0.78rem; border-radius: 8px; cursor: pointer;
+font-family: ‘DM Mono’, monospace; font-weight: 500;
+color: var(–text-mid); position: relative;
+transition: background 0.12s, color 0.12s;
+user-select: none;
+}
+.cal-day:hover:not(.empty):not(.other-month) {
+background: rgba(10,186,181,0.15);
+color: var(–tiffany-deep);
+}
+.cal-day.other-month { color: var(–text-dim); opacity: 0.45; cursor: default; }
+.cal-day.empty { cursor: default; }
+.cal-day.today::after {
+content: ‘’; position: absolute; bottom: 3px; left: 50%; transform: translateX(-50%);
+width: 4px; height: 4px; border-radius: 50%; background: var(–tiffany);
+}
+
+/* Panel 1 月曆選取狀態 */
+.cal-day.is-start {
+background: var(–tiffany) !important;
+color: #ffffff !important; font-weight: 800;
+border-radius: 8px 0 0 8px;
+}
+.cal-day.is-end {
+background: var(–tiffany-deep) !important;
+color: #ffffff !important; font-weight: 800;
+border-radius: 0 8px 8px 0;
+}
+.cal-day.is-start.is-end { border-radius: 8px !important; }
+.cal-day.in-range {
+background: rgba(10,186,181,0.15);
+color: var(–tiffany-deep);
+border-radius: 0;
+}
+/* 工作日在範圍內的標記（底部小點） */
+.cal-day.in-range.is-workday::after,
+.cal-day.is-start.is-workday::after,
+.cal-day.is-end.is-workday::after { display: none; }
+.cal-day.in-range.is-workday {
+background: rgba(132,204,22,0.14);
+color: var(–accent-lime);
+}
+
+/* 星期六、日顏色 */
+.cal-day.day-sat:not(.is-start):not(.is-end):not(.in-range) { color: var(–accent-cyan); opacity: 0.75; }
+.cal-day.day-sun:not(.is-start):not(.is-end):not(.in-range) { color: var(–accent-rose); opacity: 0.75; }
+
+/* Panel 2 月曆選取狀態 */
+.cal-day.is-base {
+background: var(–accent-violet) !important;
+color: #fff !important; font-weight: 800; border-radius: 8px;
+}
+.cal-day.is-result {
+background: rgba(196,181,253,0.2) !important;
+color: #c4b5fd !important; font-weight: 700; border-radius: 8px;
+box-shadow: inset 0 0 0 1.5px rgba(196,181,253,0.5);
+}
+
+/* ── 圖例 ── */
+.cal-legend {
+display: flex; flex-wrap: wrap; gap: 8px;
+margin-top: 10px; padding-top: 10px;
+border-top: 1px solid var(–border-dim);
+}
+.legend-item {
+display: flex; align-items: center; gap: 5px;
+font-size: 0.65rem; font-family: ‘DM Mono’, monospace;
+color: var(–text-mid); white-space: nowrap;
+}
+.legend-dot {
+width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0;
+}
+
+/* ── 工作日勾選區 ── */
+.workday-box {
+background: var(–bg-section); padding: 12px; border-radius: 14px;
+margin-bottom: 12px; border: 1px solid var(–border-dim); width: 100%; overflow: hidden;
+}
+.workday-title {
+font-size: 0.7rem; color: var(–text-mid); margin-bottom: 8px; display: block;
+font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; font-family: ‘DM Mono’, monospace;
+}
+.check-grid {
+display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; width: 100%;
+}
+.check-item {
+display: flex !important; flex-direction: column; align-items: center; justify-content: center;
+font-size: 0.72rem; cursor: pointer; background: var(–bg-card); padding: 6px 2px;
+border-radius: 8px; border: 1.5px solid var(–border-dim);
+user-select: none; font-weight: 600; color: var(–text-mid);
+margin-bottom: 0; overflow: hidden; white-space: nowrap;
+transition: border-color 0.15s, color 0.15s, background 0.15s;
+font-family: ‘Sora’, sans-serif; gap: 3px;
+}
+.check-item input[type=“checkbox”] { display: none; }
+.check-item .ck-dot {
+width: 8px; height: 8px; border-radius: 50%;
+background: var(–text-dim); transition: background 0.15s;
+}
+.check-item:has(input:checked) { background: rgba(10,186,181,0.12); border-color: rgba(10,186,181,0.5); color: var(–tiffany-deep); }
+.check-item:has(input:checked) .ck-dot { background: var(–tiffany); }
+.check-item.sat:has(input:checked) { background: rgba(0,212,255,0.08); border-color: rgba(0,212,255,0.5); color: var(–accent-cyan); }
+.check-item.sat:has(input:checked) .ck-dot { background: var(–accent-cyan); }
+.check-item.sun:has(input:checked) { background: rgba(244,63,94,0.08); border-color: rgba(244,63,94,0.5); color: var(–accent-rose); }
+.check-item.sun:has(input:checked) .ck-dot { background: var(–accent-rose); }
+
+/* ── 結果卡片 ── */
+.res-display {
+text-align: center; padding: 16px 12px; border-radius: 14px;
+margin-bottom: 10px; border: 1px solid var(–border-dim);
+width: 100%; overflow: hidden; position: relative;
+}
+.res-total { background: var(–grad-total); border-color: rgba(10,186,181,0.3); }
+.res-total::before { content:’’; position:absolute; left:0;top:0;bottom:0;width:3px; background:linear-gradient(180deg,var(–tiffany),var(–tiffany-deep)); border-radius:14px 0 0 14px; }
+.res-work  { background: var(–grad-work);  border-color: rgba(132,204,22,0.2); }
+.res-work::before  { content:’’; position:absolute; left:0;top:0;bottom:0;width:3px; background:linear-gradient(180deg,var(–accent-lime),#22c55e); border-radius:14px 0 0 14px; }
+.res-date  { background: var(–grad-date);  border-color: rgba(124,92,191,0.3); }
+.res-date::before  { content:’’; position:absolute; left:0;top:0;bottom:0;width:3px; background:linear-gradient(180deg,var(–accent-violet),var(–tiffany)); border-radius:14px 0 0 14px; }
+
+.res-display small {
+display: block; font-size: 0.68rem; font-family: ‘DM Mono’, monospace;
+text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px;
+}
+.res-total small { color: var(–tiffany-deep); }
+.res-work  small { color: var(–accent-lime); }
+.res-date  small { color: #b794f4; }
+
+.big-val {
+font-size: 2.2rem; font-weight: 800; display: block;
+word-break: break-word; line-height: 1.1; font-family: ‘DM Mono’, monospace;
+}
+.res-total .big-val { color: var(–tiffany-deep); text-shadow: 0 0 12px rgba(10,186,181,0.35); }
+.res-work  .big-val { color: var(–accent-lime);  text-shadow: 0 0 12px rgba(58,181,106,0.3); }
+.res-date  .big-val { color: var(–accent-violet); text-shadow: 0 0 12px rgba(108,99,184,0.3); font-size: 1.3rem; line-height: 1.4; }
+
+/* ── P2 雙欄 ── */
+.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; width: 100%; }
+
+/* ── 月曆區段標籤 ── */
+.cal-section-label {
+font-size: 0.72rem; font-family: ‘DM Mono’, monospace;
+font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em;
+color: var(–text-mid); margin-bottom: 6px; margin-top: 4px;
+}
+#p2r-wrap .cal-nav { justify-content: center; }
+#p2r-wrap { position: relative; }
+#p2r-wrap::before {
+content: ‘’; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+background: linear-gradient(180deg, var(–tiffany), var(–tiffany-deep));
+border-radius: 16px 0 0 16px;
+}
+
+/* ── 選取提示 ── */
+.pick-hint {
+text-align: center; font-size: 0.72rem; font-family: ‘DM Mono’, monospace;
+color: var(–tiffany-deep); margin-bottom: 8px; letter-spacing: 0.04em;
+min-height: 18px;
+}
+
+@media (max-width: 400px) {
+body { padding: 8px; }
+.panel { padding: 12px; }
+.date-row { grid-template-columns: 1fr; }
+.row2 { grid-template-columns: 1fr; }
+.big-val { font-size: 1.9rem; }
+.res-date .big-val { font-size: 1.15rem; }
+.check-grid { grid-template-columns: repeat(7,1fr); }
+}
 </style>
-```
 
 </head>
 <body>
 <div class="container">
 
-```
-<!-- ── Header ── -->
+<!-- Header -->
+
 <div class="header">
     <div class="header-title">
         <div class="header-icon">⏱</div>
@@ -366,150 +366,510 @@
     </nav>
 </div>
 
-<!-- ── Panel 1：工期計算機 ── -->
+<!-- Panel 1 -->
+
 <div id="p1" class="panel active">
-    <div class="row">
-        <div>
-            <span class="field-label">開始日期</span>
-            <input type="date" id="start-date">
-        </div>
-        <div>
-            <span class="field-label">結束日期</span>
-            <input type="date" id="end-date">
-        </div>
-    </div>
 
-    <div class="workday-box">
-        <span class="workday-title">設定工作日（勾選即納入計算）</span>
-        <div class="check-grid" id="weekday-group">
-            <label class="check-item"><input type="checkbox" value="1" checked>週一</label>
-            <label class="check-item"><input type="checkbox" value="2" checked>週二</label>
-            <label class="check-item"><input type="checkbox" value="3" checked>週三</label>
-            <label class="check-item"><input type="checkbox" value="4" checked>週四</label>
-            <label class="check-item"><input type="checkbox" value="5" checked>週五</label>
-            <label class="check-item sat"><input type="checkbox" value="6">週六</label>
-            <label class="check-item sun"><input type="checkbox" value="0">週日</label>
-        </div>
+```
+<!-- 日期輸入 -->
+<div class="date-row">
+    <div>
+        <span class="field-label">開始日期</span>
+        <input type="date" id="start-date">
     </div>
-
-    <div class="res-display res-total">
-        <small>總曆天數（含首尾）</small>
-        <span class="big-val" id="out-total">— 天</span>
-    </div>
-    <div class="res-display res-work">
-        <small>合計工作天</small>
-        <span class="big-val" id="out-work">— 天</span>
+    <div>
+        <span class="field-label">結束日期</span>
+        <input type="date" id="end-date">
     </div>
 </div>
 
-<!-- ── Panel 2：日期推算 ── -->
+<!-- 工作日勾選 -->
+<div class="workday-box">
+    <span class="workday-title">工作日設定（勾選即納入計算）</span>
+    <div class="check-grid" id="weekday-group">
+        <label class="check-item"><input type="checkbox" value="1" checked><span class="ck-dot"></span>一</label>
+        <label class="check-item"><input type="checkbox" value="2" checked><span class="ck-dot"></span>二</label>
+        <label class="check-item"><input type="checkbox" value="3" checked><span class="ck-dot"></span>三</label>
+        <label class="check-item"><input type="checkbox" value="4" checked><span class="ck-dot"></span>四</label>
+        <label class="check-item"><input type="checkbox" value="5" checked><span class="ck-dot"></span>五</label>
+        <label class="check-item sat"><input type="checkbox" value="6"><span class="ck-dot"></span>六</label>
+        <label class="check-item sun"><input type="checkbox" value="0"><span class="ck-dot"></span>日</label>
+    </div>
+</div>
+
+<!-- 月曆 P1 -->
+<div class="cal-wrap">
+    <div class="cal-nav">
+        <button class="cal-nav-btn" id="p1-prev">‹</button>
+        <span class="cal-nav-title" id="p1-month-title"></span>
+        <button class="cal-nav-btn" id="p1-next">›</button>
+    </div>
+    <div class="cal-weekdays">
+        <span class="cal-wday mon">一</span>
+        <span class="cal-wday tue">二</span>
+        <span class="cal-wday wed">三</span>
+        <span class="cal-wday thu">四</span>
+        <span class="cal-wday fri">五</span>
+        <span class="cal-wday sat">六</span>
+        <span class="cal-wday sun">日</span>
+    </div>
+    <div class="cal-grid" id="p1-cal-grid"></div>
+    <div class="pick-hint" id="p1-hint">點擊日期設定開始日，再點設定結束日</div>
+    <div class="cal-legend">
+        <div class="legend-item"><div class="legend-dot" style="background:var(--tiffany)"></div>開始日</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--accent-orange)"></div>結束日</div>
+        <div class="legend-item"><div class="legend-dot" style="background:rgba(132,204,22,0.4)"></div>工作日（區間內）</div>
+        <div class="legend-item"><div class="legend-dot" style="background:rgba(245,166,35,0.13)"></div>假日（區間內）</div>
+    </div>
+</div>
+
+<!-- 結果 -->
+<div class="res-display res-total">
+    <small>總曆天數（含首尾）</small>
+    <span class="big-val" id="out-total">— 天</span>
+</div>
+<div class="res-display res-work">
+    <small>合計工作天</small>
+    <span class="big-val" id="out-work">— 天</span>
+</div>
+```
+
+</div>
+
+<!-- Panel 2 -->
+
 <div id="p2" class="panel">
-    <div class="row">
-        <div style="grid-column: span 2;">
+    <div class="row2">
+        <div>
             <span class="field-label">基準日期</span>
             <input type="date" id="base-date">
         </div>
-        <div>
-            <span class="field-label">模式</span>
-            <div class="select-wrap">
-                <select id="calc-mode">
-                    <option value="add">加上 (+)</option>
-                    <option value="sub">減去 (-)</option>
-                </select>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+            <div>
+                <span class="field-label">模式</span>
+                <div class="select-wrap">
+                    <select id="calc-mode">
+                        <option value="add">加上 (+)</option>
+                        <option value="sub">減去 (-)</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <span class="field-label">天數</span>
+                <input type="number" id="calc-num" value="30" min="0">
             </div>
         </div>
-        <div>
-            <span class="field-label">天數</span>
-            <input type="number" id="calc-num" value="30" min="0">
-        </div>
     </div>
-    <div class="res-display res-date">
-        <small>推算日期為</small>
-        <span class="big-val" id="out-date">-</span>
+
+```
+<!-- 結果卡（放在月曆上方，計算後一目瞭然） -->
+<div class="res-display res-date" style="margin-bottom:12px;">
+    <small>推算日期為</small>
+    <span class="big-val" id="out-date">-</span>
+</div>
+
+<!-- 月曆 P2：基準月 -->
+<div class="cal-section-label">📍 基準日月曆</div>
+<div class="cal-wrap">
+    <div class="cal-nav">
+        <button class="cal-nav-btn" id="p2-prev">‹</button>
+        <span class="cal-nav-title" id="p2-month-title"></span>
+        <button class="cal-nav-btn" id="p2-next">›</button>
+    </div>
+    <div class="cal-weekdays">
+        <span class="cal-wday mon">一</span><span class="cal-wday tue">二</span>
+        <span class="cal-wday wed">三</span><span class="cal-wday thu">四</span>
+        <span class="cal-wday fri">五</span><span class="cal-wday sat">六</span>
+        <span class="cal-wday sun">日</span>
+    </div>
+    <div class="cal-grid" id="p2-cal-grid"></div>
+    <div class="pick-hint" id="p2-hint">點擊月曆選取基準日期</div>
+</div>
+
+<!-- 月曆 P2R：結果月（自動同步） -->
+<div class="cal-section-label" id="p2r-label">🎯 推算結果月曆</div>
+<div class="cal-wrap" id="p2r-wrap" style="border-color:rgba(10,186,181,0.3);">
+    <div class="cal-nav">
+        <span class="cal-nav-title" id="p2r-month-title" style="color:var(--tiffany-deep);"></span>
+    </div>
+    <div class="cal-weekdays">
+        <span class="cal-wday mon">一</span><span class="cal-wday tue">二</span>
+        <span class="cal-wday wed">三</span><span class="cal-wday thu">四</span>
+        <span class="cal-wday fri">五</span><span class="cal-wday sat">六</span>
+        <span class="cal-wday sun">日</span>
+    </div>
+    <div class="cal-grid" id="p2r-cal-grid"></div>
+    <div class="cal-legend">
+        <div class="legend-item"><div class="legend-dot" style="background:var(--accent-violet)"></div>基準日</div>
+        <div class="legend-item"><div class="legend-dot" style="background:rgba(196,181,253,0.35);border:1.5px solid rgba(196,181,253,0.5);"></div>結果日</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--tiffany);border-radius:50%;"></div>今天</div>
     </div>
 </div>
 ```
 
 </div>
 
+</div><!-- /container -->
+
 <script>
-    // ── 分頁切換 ──
-    document.querySelectorAll('.tab-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            document.querySelectorAll('.tab-btn, .panel').forEach(el => el.classList.remove('active'));
-            btn.classList.add('active');
-            document.getElementById(btn.dataset.target).classList.add('active');
-        });
-    });
+// ════════════════════════════════
+//  共用工具
+// ════════════════════════════════
+function toLocal(dateStr) {
+    // "YYYY-MM-DD" → Date (local midnight)
+    if (!dateStr) return null;
+    const [y, m, d] = dateStr.split('-').map(Number);
+    return new Date(y, m - 1, d);
+}
+function toStr(date) {
+    if (!date) return '';
+    const y = date.getFullYear();
+    const m = String(date.getMonth() + 1).padStart(2, '0');
+    const d = String(date.getDate()).padStart(2, '0');
+    return `${y}-${m}-${d}`;
+}
+function getTodayLocal() {
+    const d = new Date();
+    return toStr(d);
+}
+function sameDay(a, b) {
+    if (!a || !b) return false;
+    return a.getFullYear() === b.getFullYear() &&
+           a.getMonth()    === b.getMonth()    &&
+           a.getDate()     === b.getDate();
+}
 
-    // ── 本地時間初始化 ──
-    function getTodayLocal() {
-        const d = new Date();
-        const y = d.getFullYear();
-        const m = String(d.getMonth() + 1).padStart(2, '0');
-        const day = String(d.getDate()).padStart(2, '0');
-        return `${y}-${m}-${day}`;
+const todayStr = getTodayLocal();
+const todayDate = toLocal(todayStr);
+
+// ════════════════════════════════
+//  Panel 1 狀態
+// ════════════════════════════════
+let p1ViewYear  = todayDate.getFullYear();
+let p1ViewMonth = todayDate.getMonth(); // 0-based
+let p1PickStep  = 0; // 0=選起, 1=選迄
+let p1Start     = toLocal(todayStr);
+let p1End       = toLocal(todayStr);
+
+const p1StartInput = document.getElementById('start-date');
+const p1EndInput   = document.getElementById('end-date');
+p1StartInput.value = todayStr;
+p1EndInput.value   = todayStr;
+
+// 取得勾選的工作日
+function getWorkdays() {
+    return Array.from(document.querySelectorAll('#weekday-group input:checked'))
+                .map(cb => parseInt(cb.value));
+}
+
+// 計算並更新結果
+function calcP1() {
+    if (!p1Start || !p1End) return;
+    let dS = p1Start, dE = p1End;
+    if (dS > dE) [dS, dE] = [dE, dS];
+
+    const totalDays = Math.floor((dE - dS) / 86400000) + 1;
+    document.getElementById('out-total').textContent = totalDays + ' 天';
+
+    const wdays = getWorkdays();
+    let work = 0;
+    const cur = new Date(dS);
+    for (let i = 0; i < totalDays; i++) {
+        if (wdays.includes(cur.getDay())) work++;
+        cur.setDate(cur.getDate() + 1);
     }
-    const todayStr = getTodayLocal();
-    ['start-date', 'end-date', 'base-date'].forEach(id => {
-        document.getElementById(id).value = todayStr;
-    });
+    document.getElementById('out-work').textContent = work + ' 天';
+}
 
-    // ── 工期計算 ──
-    function performCalculation() {
-        const startVal = document.getElementById('start-date').value;
-        const endVal   = document.getElementById('end-date').value;
-        if (!startVal || !endVal) return;
+// 繪製 P1 月曆
+function renderP1Cal() {
+    const grid  = document.getElementById('p1-cal-grid');
+    const title = document.getElementById('p1-month-title');
+    const y = p1ViewYear, m = p1ViewMonth;
 
-        let dStart = new Date(startVal + 'T00:00:00');
-        let dEnd   = new Date(endVal   + 'T00:00:00');
-        if (dStart > dEnd) [dStart, dEnd] = [dEnd, dStart];
+    title.textContent = `${y} 年 ${m + 1} 月`;
+    grid.innerHTML = '';
 
-        const totalDays = Math.floor((dEnd - dStart) / 86400000) + 1;
-        document.getElementById('out-total').textContent = totalDays + ' 天';
+    const firstDay = new Date(y, m, 1);
+    const lastDay  = new Date(y, m + 1, 0);
 
-        const selectedDays = Array.from(
-            document.querySelectorAll('#weekday-group input:checked')
-        ).map(cb => parseInt(cb.value));
+    // 月曆起始星期一對齊 (ISO: 1=Mon...0=Sun)
+    let startWd = firstDay.getDay(); // 0=Sun
+    startWd = startWd === 0 ? 6 : startWd - 1; // convert to Mon-based
 
-        let workCount = 0;
-        const cur = new Date(dStart);
-        for (let i = 0; i < totalDays; i++) {
-            if (selectedDays.includes(cur.getDay())) workCount++;
-            cur.setDate(cur.getDate() + 1);
+    const wdays = getWorkdays();
+    let dS = p1Start, dE = p1End;
+    if (dS && dE && dS > dE) [dS, dE] = [dE, dS];
+
+    // 前補空格
+    for (let i = 0; i < startWd; i++) {
+        const el = document.createElement('div');
+        el.className = 'cal-day empty';
+        grid.appendChild(el);
+    }
+
+    for (let d = 1; d <= lastDay.getDate(); d++) {
+        const date = new Date(y, m, d);
+        const wd   = date.getDay(); // 0=Sun,6=Sat
+        const el   = document.createElement('div');
+        el.textContent = d;
+        el.className   = 'cal-day';
+
+        // 星期色
+        if (wd === 6) el.classList.add('day-sat');
+        if (wd === 0) el.classList.add('day-sun');
+
+        // 今天
+        if (sameDay(date, todayDate)) el.classList.add('today');
+
+        // 範圍標示
+        if (dS && dE) {
+            const isWorkday = wdays.includes(wd);
+            if (sameDay(date, dS)) el.classList.add('is-start');
+            else if (sameDay(date, dE)) el.classList.add('is-end');
+            else if (date > dS && date < dE) {
+                el.classList.add('in-range');
+                if (isWorkday) el.classList.add('is-workday');
+            }
+        } else if (dS && sameDay(date, dS)) {
+            el.classList.add('is-start', 'is-end');
         }
-        document.getElementById('out-work').textContent = workCount + ' 天';
+
+        el.addEventListener('click', () => onP1DayClick(y, m, d));
+        grid.appendChild(el);
+    }
+}
+
+function onP1DayClick(y, m, d) {
+    const clicked = new Date(y, m, d);
+    const hint = document.getElementById('p1-hint');
+
+    if (p1PickStep === 0) {
+        p1Start = clicked;
+        p1End   = null;
+        p1PickStep = 1;
+        hint.textContent = '✓ 已設定開始日 · 請點選結束日';
+        p1StartInput.value = toStr(clicked);
+        p1EndInput.value   = '';
+    } else {
+        // 若點的比開始早，交換
+        if (clicked < p1Start) {
+            p1End   = p1Start;
+            p1Start = clicked;
+        } else {
+            p1End = clicked;
+        }
+        p1PickStep = 0;
+        hint.textContent = `✓ ${toStr(p1Start)} → ${toStr(p1End)}　點擊可重新選取`;
+        p1StartInput.value = toStr(p1Start);
+        p1EndInput.value   = toStr(p1End);
+        calcP1();
+    }
+    renderP1Cal();
+}
+
+// P1 input 手動輸入同步月曆
+p1StartInput.addEventListener('change', () => {
+    const d = toLocal(p1StartInput.value);
+    if (d) { p1Start = d; p1ViewYear = d.getFullYear(); p1ViewMonth = d.getMonth(); }
+    if (p1Start && p1End) calcP1();
+    renderP1Cal();
+});
+p1EndInput.addEventListener('change', () => {
+    const d = toLocal(p1EndInput.value);
+    if (d) { p1End = d; }
+    if (p1Start && p1End) calcP1();
+    renderP1Cal();
+});
+
+document.querySelectorAll('#weekday-group input').forEach(cb => {
+    cb.addEventListener('change', () => { calcP1(); renderP1Cal(); });
+});
+
+document.getElementById('p1-prev').addEventListener('click', () => {
+    p1ViewMonth--;
+    if (p1ViewMonth < 0) { p1ViewMonth = 11; p1ViewYear--; }
+    renderP1Cal();
+});
+document.getElementById('p1-next').addEventListener('click', () => {
+    p1ViewMonth++;
+    if (p1ViewMonth > 11) { p1ViewMonth = 0; p1ViewYear++; }
+    renderP1Cal();
+});
+
+// ════════════════════════════════
+//  Panel 2 狀態
+// ════════════════════════════════
+let p2ViewYear  = todayDate.getFullYear();
+let p2ViewMonth = todayDate.getMonth();
+let p2Base      = toLocal(todayStr);
+let p2Result    = null;
+
+const p2BaseInput = document.getElementById('base-date');
+p2BaseInput.value = todayStr;
+
+function calcP2() {
+    const mode = document.getElementById('calc-mode').value;
+    const num  = Math.abs(parseInt(document.getElementById('calc-num').value) || 0);
+    if (!p2Base) return;
+    const d = new Date(p2Base);
+    d.setDate(d.getDate() + (mode === 'add' ? num : -num));
+    p2Result = d;
+
+    const opts = { year: 'numeric', month: '2-digit', day: '2-digit', weekday: 'long' };
+    document.getElementById('out-date').textContent = d.toLocaleDateString('zh-TW', opts);
+
+    // 更新提示文字
+    const sameMonth = p2Base.getFullYear() === p2Result.getFullYear() &&
+                      p2Base.getMonth()    === p2Result.getMonth();
+    document.getElementById('p2-hint').textContent =
+        `✓ 基準日：${toStr(p2Base)}　→　結果：${toStr(p2Result)}`;
+
+    // 若同月，結果月曆隱藏；不同月，顯示並跳到結果月
+    const wrapEl  = document.getElementById('p2r-wrap');
+    const labelEl = document.getElementById('p2r-label');
+    if (sameMonth) {
+        wrapEl.style.display  = 'none';
+        labelEl.style.display = 'none';
+    } else {
+        wrapEl.style.display  = '';
+        labelEl.style.display = '';
+        renderP2ResultCal();
     }
 
-    // ── 日期推算 ──
-    function performDateCalc() {
-        const baseVal = document.getElementById('base-date').value;
-        const mode    = document.getElementById('calc-mode').value;
-        const num     = Math.abs(parseInt(document.getElementById('calc-num').value) || 0);
-        if (!baseVal) return;
+    renderP2Cal();
+}
 
-        const d = new Date(baseVal + 'T00:00:00');
-        d.setDate(d.getDate() + (mode === 'add' ? num : -num));
+// 基準月月曆
+function renderP2Cal() {
+    const grid  = document.getElementById('p2-cal-grid');
+    const title = document.getElementById('p2-month-title');
+    const y = p2ViewYear, m = p2ViewMonth;
 
-        const options = { year: 'numeric', month: '2-digit', day: '2-digit', weekday: 'long' };
-        document.getElementById('out-date').textContent = d.toLocaleDateString('zh-TW', options);
+    title.textContent = `${y} 年 ${m + 1} 月`;
+    grid.innerHTML = '';
+
+    const firstDay = new Date(y, m, 1);
+    const lastDay  = new Date(y, m + 1, 0);
+    let startWd = firstDay.getDay();
+    startWd = startWd === 0 ? 6 : startWd - 1;
+
+    for (let i = 0; i < startWd; i++) {
+        const el = document.createElement('div');
+        el.className = 'cal-day empty';
+        grid.appendChild(el);
     }
 
-    // ── 事件綁定 ──
-    ['start-date', 'end-date'].forEach(id =>
-        document.getElementById(id).addEventListener('change', performCalculation)
-    );
-    document.querySelectorAll('#weekday-group input').forEach(cb =>
-        cb.addEventListener('change', performCalculation)
-    );
-    ['base-date', 'calc-mode', 'calc-num'].forEach(id => {
-        const el = document.getElementById(id);
-        el.addEventListener('input', performDateCalc);
-        el.addEventListener('change', performDateCalc);
+    for (let d = 1; d <= lastDay.getDate(); d++) {
+        const date = new Date(y, m, d);
+        const wd   = date.getDay();
+        const el   = document.createElement('div');
+        el.textContent = d;
+        el.className   = 'cal-day';
+
+        if (wd === 6) el.classList.add('day-sat');
+        if (wd === 0) el.classList.add('day-sun');
+        if (sameDay(date, todayDate)) el.classList.add('today');
+        if (p2Base   && sameDay(date, p2Base))   el.classList.add('is-base');
+        // 若結果日同月也在這裡標示
+        if (p2Result && sameDay(date, p2Result))  el.classList.add('is-result');
+
+        el.addEventListener('click', () => {
+            p2Base = new Date(y, m, d);
+            p2ViewYear  = p2Base.getFullYear();
+            p2ViewMonth = p2Base.getMonth();
+            p2BaseInput.value = toStr(p2Base);
+            calcP2();
+        });
+        grid.appendChild(el);
+    }
+}
+
+// 結果月月曆（只顯示，不可點擊選取）
+function renderP2ResultCal() {
+    if (!p2Result) return;
+    const grid  = document.getElementById('p2r-cal-grid');
+    const title = document.getElementById('p2r-month-title');
+    const y = p2Result.getFullYear(), m = p2Result.getMonth();
+
+    title.textContent = `${y} 年 ${m + 1} 月`;
+    grid.innerHTML = '';
+
+    const firstDay = new Date(y, m, 1);
+    const lastDay  = new Date(y, m + 1, 0);
+    let startWd = firstDay.getDay();
+    startWd = startWd === 0 ? 6 : startWd - 1;
+
+    for (let i = 0; i < startWd; i++) {
+        const el = document.createElement('div');
+        el.className = 'cal-day empty';
+        grid.appendChild(el);
+    }
+
+    for (let d = 1; d <= lastDay.getDate(); d++) {
+        const date = new Date(y, m, d);
+        const wd   = date.getDay();
+        const el   = document.createElement('div');
+        el.textContent = d;
+        el.className   = 'cal-day';
+
+        if (wd === 6) el.classList.add('day-sat');
+        if (wd === 0) el.classList.add('day-sun');
+        if (sameDay(date, todayDate)) el.classList.add('today');
+        if (p2Base   && sameDay(date, p2Base))   el.classList.add('is-base');
+        if (p2Result && sameDay(date, p2Result))  el.classList.add('is-result');
+
+        // 結果月曆不允許點擊選取基準日
+        el.style.cursor = 'default';
+        grid.appendChild(el);
+    }
+}
+
+p2BaseInput.addEventListener('change', () => {
+    const d = toLocal(p2BaseInput.value);
+    if (d) {
+        p2Base = d;
+        p2ViewYear  = d.getFullYear();
+        p2ViewMonth = d.getMonth();
+    }
+    calcP2();
+});
+['calc-mode', 'calc-num'].forEach(id => {
+    const el = document.getElementById(id);
+    el.addEventListener('input',  calcP2);
+    el.addEventListener('change', calcP2);
+});
+
+document.getElementById('p2-prev').addEventListener('click', () => {
+    p2ViewMonth--;
+    if (p2ViewMonth < 0) { p2ViewMonth = 11; p2ViewYear--; }
+    renderP2Cal();
+});
+document.getElementById('p2-next').addEventListener('click', () => {
+    p2ViewMonth++;
+    if (p2ViewMonth > 11) { p2ViewMonth = 0; p2ViewYear++; }
+    renderP2Cal();
+});
+
+// ════════════════════════════════
+//  分頁切換
+// ════════════════════════════════
+document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn, .panel').forEach(el => el.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById(btn.dataset.target).classList.add('active');
     });
+});
 
-    performCalculation();
-    performDateCalc();
+// ── 初始化 ──
+renderP1Cal();
+calcP1();
+// P2 初始化：先隱藏結果月曆，calcP2 會決定是否顯示
+document.getElementById('p2r-wrap').style.display  = 'none';
+document.getElementById('p2r-label').style.display = 'none';
+renderP2Cal();
+calcP2();
 </script>
 
 </body>
