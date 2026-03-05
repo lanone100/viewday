@@ -72,19 +72,19 @@ border-bottom: 1px solid var(–border-dim);
 }
 .header-title { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
 .header-icon {
-width: 36px; height: 36px; border-radius: 10px;
+width: 42px; height: 42px; border-radius: 12px;
 background: var(–grad-tab);
 display: flex; align-items: center; justify-content: center;
-font-size: 1.1rem; box-shadow: 0 4px 12px rgba(10,186,181,0.45);
+font-size: 1.3rem; box-shadow: 0 4px 12px rgba(10,186,181,0.45);
 flex-shrink: 0;
 }
-.header-text h1 { font-size: 1rem; font-weight: 800; color: var(–text-bright); margin: 0; letter-spacing: 0.02em; }
-.header-text p  { font-size: 0.7rem; color: var(–text-mid); margin: 0; font-family: ‘DM Mono’, monospace; letter-spacing: 0.05em; }
+.header-text h1 { font-size: 1.15rem; font-weight: 800; color: var(–text-bright); margin: 0; letter-spacing: 0.02em; }
+.header-text p  { font-size: 0.8rem; color: var(–text-mid); margin: 0; font-family: ‘DM Mono’, monospace; letter-spacing: 0.05em; }
 
 .tabs { display: flex; gap: 4px; }
 .tab-btn {
-flex: 1; padding: 11px 8px; border: none; background: none; cursor: pointer;
-font-family: ‘Sora’, sans-serif; font-weight: 600; font-size: 0.82rem;
+flex: 1; padding: 13px 8px; border: none; background: none; cursor: pointer;
+font-family: ‘Sora’, sans-serif; font-weight: 600; font-size: 0.95rem;
 color: var(–text-mid); border-bottom: 2px solid transparent;
 transition: color 0.2s, border-color 0.2s;
 white-space: nowrap; overflow: hidden; text-overflow: ellipsis; letter-spacing: 0.02em;
@@ -92,21 +92,21 @@ white-space: nowrap; overflow: hidden; text-overflow: ellipsis; letter-spacing: 
 .tab-btn.active { color: var(–tiffany-deep); border-bottom-color: var(–tiffany); }
 
 /* ── Panels ── */
-.panel { display: none; padding: 16px; background: var(–bg-mid); }
+.panel { display: none; padding: 18px; background: var(–bg-mid); }
 .panel.active { display: block; }
 
 /* ── Field label ── */
 .field-label {
-font-size: 0.7rem; color: var(–text-mid); margin-bottom: 5px;
+font-size: 0.8rem; color: var(–text-mid); margin-bottom: 6px;
 display: block; font-weight: 600; text-transform: uppercase;
 letter-spacing: 0.08em; font-family: ‘DM Mono’, monospace;
 }
 
 /* ── Inputs ── */
 input[type=“date”], input[type=“number”], select {
-width: 100%; max-width: 100%; padding: 9px 11px;
+width: 100%; max-width: 100%; padding: 11px 13px;
 border: 1.5px solid var(–border-dim); border-radius: 10px;
-font-size: 0.88rem; font-family: ‘DM Mono’, monospace;
+font-size: 1rem; font-family: ‘DM Mono’, monospace;
 color: var(–text-bright); background: var(–bg-input);
 -webkit-appearance: none; appearance: none;
 transition: border-color 0.2s, box-shadow 0.2s; color-scheme: light;
@@ -120,7 +120,7 @@ input[type=“number”]::-webkit-inner-spin-button { opacity: 1; }
 .select-wrap::after {
 content: “▾”; position: absolute; right: 11px; top: 50%;
 transform: translateY(-50%); pointer-events: none;
-color: var(–tiffany-deep); font-size: 0.85rem;
+color: var(–tiffany-deep); font-size: 1rem;
 }
 
 /* ── Date input row ── */
@@ -133,7 +133,7 @@ gap: 10px; margin-bottom: 12px; width: 100%;
 .cal-wrap {
 background: var(–bg-section);
 border-radius: 16px; border: 1px solid var(–border-dim);
-padding: 12px; margin-bottom: 12px; overflow: hidden;
+padding: 14px; margin-bottom: 14px; overflow: hidden;
 }
 
 /* 月曆導航列 */
@@ -142,14 +142,14 @@ display: flex; align-items: center; justify-content: space-between;
 margin-bottom: 10px;
 }
 .cal-nav-title {
-font-size: 0.88rem; font-weight: 700; color: var(–text-bright);
+font-size: 1rem; font-weight: 700; color: var(–text-bright);
 font-family: ‘DM Mono’, monospace; letter-spacing: 0.04em;
 text-align: center; flex: 1;
 }
 .cal-nav-btn {
-width: 30px; height: 30px; border: none;
+width: 34px; height: 34px; border: none;
 background: var(–bg-section); border-radius: 8px;
-color: var(–tiffany); font-size: 1rem;
+color: var(–tiffany); font-size: 1.2rem;
 cursor: pointer; display: flex; align-items: center; justify-content: center;
 flex-shrink: 0; transition: background 0.15s;
 }
@@ -161,7 +161,7 @@ display: grid; grid-template-columns: repeat(7, 1fr);
 margin-bottom: 4px;
 }
 .cal-wday {
-text-align: center; font-size: 0.65rem;
+text-align: center; font-size: 0.78rem;
 font-family: ‘DM Mono’, monospace; font-weight: 500;
 padding: 4px 0; letter-spacing: 0.06em;
 }
@@ -176,7 +176,7 @@ gap: 2px;
 }
 .cal-day {
 aspect-ratio: 1; display: flex; align-items: center; justify-content: center;
-font-size: 0.78rem; border-radius: 8px; cursor: pointer;
+font-size: 0.9rem; border-radius: 8px; cursor: pointer;
 font-family: ‘DM Mono’, monospace; font-weight: 500;
 color: var(–text-mid); position: relative;
 transition: background 0.12s, color 0.12s;
@@ -190,7 +190,7 @@ color: var(–tiffany-deep);
 .cal-day.empty { cursor: default; }
 .cal-day.today::after {
 content: ‘’; position: absolute; bottom: 3px; left: 50%; transform: translateX(-50%);
-width: 4px; height: 4px; border-radius: 50%; background: var(–tiffany);
+width: 5px; height: 5px; border-radius: 50%; background: var(–tiffany);
 }
 
 /* Panel 1 月曆選取狀態 */
@@ -242,7 +242,7 @@ border-top: 1px solid var(–border-dim);
 }
 .legend-item {
 display: flex; align-items: center; gap: 5px;
-font-size: 0.65rem; font-family: ‘DM Mono’, monospace;
+font-size: 0.78rem; font-family: ‘DM Mono’, monospace;
 color: var(–text-mid); white-space: nowrap;
 }
 .legend-dot {
@@ -251,11 +251,11 @@ width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0;
 
 /* ── 工作日勾選區 ── */
 .workday-box {
-background: var(–bg-section); padding: 12px; border-radius: 14px;
+background: var(–bg-section); padding: 14px; border-radius: 14px;
 margin-bottom: 12px; border: 1px solid var(–border-dim); width: 100%; overflow: hidden;
 }
 .workday-title {
-font-size: 0.7rem; color: var(–text-mid); margin-bottom: 8px; display: block;
+font-size: 0.82rem; color: var(–text-mid); margin-bottom: 8px; display: block;
 font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; font-family: ‘DM Mono’, monospace;
 }
 .check-grid {
@@ -263,7 +263,7 @@ display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; width: 100%;
 }
 .check-item {
 display: flex !important; flex-direction: column; align-items: center; justify-content: center;
-font-size: 0.72rem; cursor: pointer; background: var(–bg-card); padding: 6px 2px;
+font-size: 0.85rem; cursor: pointer; background: var(–bg-card); padding: 7px 2px;
 border-radius: 8px; border: 1.5px solid var(–border-dim);
 user-select: none; font-weight: 600; color: var(–text-mid);
 margin-bottom: 0; overflow: hidden; white-space: nowrap;
@@ -284,7 +284,7 @@ background: var(–text-dim); transition: background 0.15s;
 
 /* ── 結果卡片 ── */
 .res-display {
-text-align: center; padding: 16px 12px; border-radius: 14px;
+text-align: center; padding: 20px 14px; border-radius: 14px;
 margin-bottom: 10px; border: 1px solid var(–border-dim);
 width: 100%; overflow: hidden; position: relative;
 }
@@ -296,7 +296,7 @@ width: 100%; overflow: hidden; position: relative;
 .res-date::before  { content:’’; position:absolute; left:0;top:0;bottom:0;width:3px; background:linear-gradient(180deg,var(–accent-violet),var(–tiffany)); border-radius:14px 0 0 14px; }
 
 .res-display small {
-display: block; font-size: 0.68rem; font-family: ‘DM Mono’, monospace;
+display: block; font-size: 0.8rem; font-family: ‘DM Mono’, monospace;
 text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px;
 }
 .res-total small { color: var(–tiffany-deep); }
@@ -304,19 +304,19 @@ text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px;
 .res-date  small { color: #b794f4; }
 
 .big-val {
-font-size: 2.2rem; font-weight: 800; display: block;
+font-size: 2.6rem; font-weight: 800; display: block;
 word-break: break-word; line-height: 1.1; font-family: ‘DM Mono’, monospace;
 }
 .res-total .big-val { color: var(–tiffany-deep); text-shadow: 0 0 12px rgba(10,186,181,0.35); }
 .res-work  .big-val { color: var(–accent-lime);  text-shadow: 0 0 12px rgba(58,181,106,0.3); }
-.res-date  .big-val { color: var(–accent-violet); text-shadow: 0 0 12px rgba(108,99,184,0.3); font-size: 1.3rem; line-height: 1.4; }
+.res-date  .big-val { color: var(–accent-violet); text-shadow: 0 0 12px rgba(108,99,184,0.3); font-size: 1.5rem; line-height: 1.4; }
 
 /* ── P2 雙欄 ── */
 .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; width: 100%; }
 
 /* ── 月曆區段標籤 ── */
 .cal-section-label {
-font-size: 0.72rem; font-family: ‘DM Mono’, monospace;
+font-size: 0.84rem; font-family: ‘DM Mono’, monospace;
 font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em;
 color: var(–text-mid); margin-bottom: 6px; margin-top: 4px;
 }
@@ -331,7 +331,7 @@ border-radius: 16px 0 0 16px;
 /* ── 選取提示 ── */
 .pick-hint {
 text-align: center; font-size: 0.72rem; font-family: ‘DM Mono’, monospace;
-color: var(–tiffany-deep); margin-bottom: 8px; letter-spacing: 0.04em;
+color: var(–tiffany-deep); margin-bottom: 8px; letter-spacing: 0.04em; font-size: 0.82rem;
 min-height: 18px;
 }
 
@@ -340,8 +340,8 @@ body { padding: 8px; }
 .panel { padding: 12px; }
 .date-row { grid-template-columns: 1fr; }
 .row2 { grid-template-columns: 1fr; }
-.big-val { font-size: 1.9rem; }
-.res-date .big-val { font-size: 1.15rem; }
+.big-val { font-size: 2.1rem; }
+.res-date .big-val { font-size: 1.3rem; }
 .check-grid { grid-template-columns: repeat(7,1fr); }
 }
 </style>
