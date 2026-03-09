@@ -1,16 +1,11 @@
 <!DOCTYPE html>
-
 <html lang="zh-TW">
 <head>
 <meta charset="UTF-8">
-<meta name="color-scheme" content="light">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
-<title>TimeMaster Pro</title>
-
+<title>工期 & 日期計算</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-/* ═══════════════════════════════════════════
-   CSS 變數 — 蒂芙尼藍 Apple 主題
-═══════════════════════════════════════════ */
 :root {
   --tf:        #0B9E9A;
   --tf-dark:   #076F6C;
@@ -21,154 +16,157 @@
   --tf-glass:  rgba(11,158,154,0.10);
   --tf-glass2: rgba(11,158,154,0.18);
 
-  --bg:        #C2E8E5;
-  --bg2:       #D8F0EE;
-  --surface:   #ffffff;
-  --surface2:  #e8f9f8;
-  --card-bg:   #ffffff;
-  --input-bg:  #ffffff;
+  --bg:       #C2E8E5;
+  --surface:  rgba(255,255,255,0.82);
+  --surface2: rgba(255,255,255,0.60);
+  --card-bg:  rgba(255,255,255,0.92);
+  --input-bg: rgba(255,255,255,0.97);
 
   --lime:   #27AE60;
-  --lime-b: rgba(39,174,96,0.15);
   --violet: #6C5CE7;
-  --vio-b:  rgba(108,92,231,0.15);
   --rose:   #E84393;
-  --rose-b: rgba(232,67,147,0.12);
-  --amber:  #F39C12;
-  --amb-b:  rgba(243,156,18,0.13);
 
   --tx1: #022E2C;
   --tx2: #1A6562;
   --tx3: #4A9E9A;
   --tx4: #88C8C5;
 
-  --r-sm:  12px;
-  --r-md:  18px;
-  --r-lg:  24px;
-  --r-xl:  32px;
+  --r-sm: 10px;
+  --r-md: 14px;
+  --r-lg: 20px;
+  --r-xl: 28px;
 
-  --shadow-sm: 0 2px 8px rgba(4,79,77,0.10);
-  --shadow-md: 0 8px 24px rgba(4,79,77,0.14), 0 2px 8px rgba(4,79,77,0.08);
-  --shadow-lg: 0 16px 48px rgba(4,79,77,0.18), 0 4px 16px rgba(4,79,77,0.10);
-  --shadow-card: 0 1px 3px rgba(4,79,77,0.08), 0 4px 16px rgba(4,79,77,0.10);
+  --shadow-sm: 0 2px 8px rgba(4,79,77,0.09);
+  --shadow-md: 0 6px 20px rgba(4,79,77,0.13),0 2px 6px rgba(4,79,77,0.07);
+  --shadow-lg: 0 16px 48px rgba(4,79,77,0.18),0 4px 16px rgba(4,79,77,0.10);
+  --card-shadow: 0 1px 3px rgba(4,79,77,0.07),0 4px 14px rgba(4,79,77,0.09);
+
+  /* Layout tokens */
+  --sidebar-w: 280px;
+  --content-max: 860px;
+  --gap: 16px;
 }
 
-/* ═══════════════════════════════════════════
-   重置 & 基礎
-═══════════════════════════════════════════ */
-*, *::before, *::after {
-  box-sizing: border-box;
-  -webkit-tap-highlight-color: transparent;
-  min-width: 0;
-}
-html, body {
-  width: 100%; max-width: 100%;
-  overflow-x: hidden; margin: 0;
-}
+*, *::before, *::after { box-sizing: border-box; -webkit-tap-highlight-color: transparent; min-width: 0; }
+html, body { width: 100%; margin: 0; overflow-x: hidden; }
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'PingFang TC', 'Hiragino Sans GB', 'Microsoft JhengHei', 'Noto Sans TC', sans-serif;
-  background: #C2E8E5;
+  font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg);
   background-image:
-    radial-gradient(ellipse 120% 60% at 50% -10%, rgba(11,158,154,0.35) 0%, transparent 55%),
-    radial-gradient(ellipse 80% 50% at 90% 100%, rgba(4,79,77,0.20) 0%, transparent 50%),
-    radial-gradient(ellipse 50% 40% at 5% 60%,  rgba(61,191,187,0.15) 0%, transparent 45%);
+    radial-gradient(ellipse 130% 55% at 50% -5%,  rgba(11,158,154,0.38) 0%, transparent 55%),
+    radial-gradient(ellipse 70%  50% at 95% 100%, rgba(4,79,77,0.20)    0%, transparent 50%),
+    radial-gradient(ellipse 50%  40% at 2%  60%,  rgba(61,191,187,0.15) 0%, transparent 45%);
   min-height: 100vh;
-  padding: 0 0 40px;
   -webkit-font-smoothing: antialiased;
 }
 
-/* ═══════════════════════════════════════════
-   精簡 Header
-═══════════════════════════════════════════ */
-.hero {
-  padding: 52px 20px 16px;
-}
-.hero-inner {
-  display: flex; align-items: center; gap: 12px;
-}
-.hero-icon {
-  width: 44px; height: 44px; border-radius: 14px;
-  background: linear-gradient(140deg, #0B9E9A 0%, #076F6C 100%);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 22px; flex-shrink: 0;
-  box-shadow: 0 4px 14px rgba(11,158,154,0.45);
-}
-.hero h1 {
-  font-size: 22px; font-weight: 900;
-  color: var(--tx1, #022E2C);
-  margin: 0 0 2px;
-  letter-spacing: -0.4px;
-  line-height: 1.2;
-}
-.hero h1 span { color: var(--tf-dark, #076F6C); }
-.hero p {
-  font-size: 12px; color: var(--tx3, #4A9E9A);
-  margin: 0; font-weight: 500;
-  letter-spacing: 0.02em;
+/* ═══════════════════ APP SHELL ═══════════════════ */
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
-/* ═══════════════════════════════════════════
-   分頁導覽 — iOS Segmented Control
-═══════════════════════════════════════════ */
-.seg-wrap {
-  padding: 8px 16px 16px;
-  position: sticky; top: 0; z-index: 100;
-  background: linear-gradient(to bottom, #C2E8E5 80%, rgba(194,232,229,0) 100%);
-}
-.seg {
+/* ═══════════════════ TOP BAR (mobile & shared) ═══════════════════ */
+.topbar {
   display: flex;
-  background: #e8f9f8;
-  border: 1px solid rgba(11,158,154,0.20);
-  border-radius: var(--r-xl);
-  padding: 4px;
-  box-shadow: var(--shadow-md);
-  gap: 2px;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  background: rgba(255,255,255,0.55);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-bottom: 1px solid rgba(255,255,255,0.5);
+  position: sticky;
+  top: 0;
+  z-index: 200;
 }
-.seg-btn {
+.topbar-icon {
+  width: 38px; height: 38px;
+  border-radius: 11px;
+  background: linear-gradient(140deg, var(--tf) 0%, var(--tf-dark) 100%);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; flex-shrink: 0;
+  box-shadow: 0 3px 12px rgba(11,158,154,0.45);
+}
+.topbar-title {
+  font-size: 17px; font-weight: 900;
+  color: var(--tx1); letter-spacing: -0.3px; line-height: 1.1;
+}
+.topbar-title span { color: var(--tf-dark); }
+.topbar-sub {
+  font-size: 11px; color: var(--tx3); font-weight: 500; margin-top: 1px;
+}
+
+/* ═══════════════════ BODY LAYOUT ═══════════════════ */
+.body-layout {
+  display: flex;
   flex: 1;
-  padding: 11px 8px;
+}
+
+/* ═══════════════════ SIDEBAR (PC) ═══════════════════ */
+.sidebar {
+  display: none; /* hidden on mobile */
+}
+
+/* ═══════════════════ MOBILE TAB BAR ═══════════════════ */
+.tabbar {
+  display: flex;
+  background: rgba(255,255,255,0.60);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255,255,255,0.45);
+  padding: 6px 12px;
+  gap: 6px;
+}
+.tab-btn {
+  flex: 1;
+  padding: 10px 6px;
   border: none; background: none; cursor: pointer;
-  font-family: -apple-system, BlinkMacSystemFont, 'PingFang TC', 'Microsoft JhengHei', sans-serif;
-  font-size: 14px; font-weight: 700;
-  color: var(--tx3, #4A9E9A);
-  border-radius: 28px;
-  transition: all 0.25s cubic-bezier(0.34,1.56,0.64,1);
+  font-family: 'Noto Sans TC', sans-serif;
+  font-size: 13px; font-weight: 700;
+  color: var(--tx3);
+  border-radius: 22px;
+  transition: all 0.22s cubic-bezier(0.34,1.56,0.64,1);
   display: flex; align-items: center; justify-content: center; gap: 5px;
   white-space: nowrap;
 }
-.seg-btn.active {
-  background: linear-gradient(135deg, #0B9E9A 0%, #076F6C 100%);
+.tab-btn.active {
+  background: linear-gradient(135deg, var(--tf) 0%, var(--tf-dark) 100%);
   color: #fff;
-  box-shadow: 0 4px 16px rgba(11,158,154,0.45), 0 2px 6px rgba(4,79,77,0.25);
-  transform: scale(1.02);
+  box-shadow: 0 3px 14px rgba(11,158,154,0.45);
 }
-.seg-btn .seg-icon { font-size: 15px; }
 
-/* ═══════════════════════════════════════════
-   主容器
-═══════════════════════════════════════════ */
-.page { display: none; padding: 0 16px; }
-.page.active { display: block; animation: fadeUp 0.28s cubic-bezier(0.22,1,0.36,1) both; }
+/* ═══════════════════ MAIN CONTENT ═══════════════════ */
+.main-content {
+  flex: 1;
+  padding: 18px var(--gap) 40px;
+  overflow-y: auto;
+}
+
+/* ═══════════════════ PAGE ═══════════════════ */
+.page { display: none; }
+.page.active { display: block; animation: fadeUp 0.26s cubic-bezier(0.22,1,0.36,1) both; }
 @keyframes fadeUp {
-  from { opacity:0; transform: translateY(14px); }
-  to   { opacity:1; transform: translateY(0); }
+  from { opacity:0; transform:translateY(12px); }
+  to   { opacity:1; transform:translateY(0); }
 }
 
-/* ═══════════════════════════════════════════
-   通用卡片
-═══════════════════════════════════════════ */
+/* ═══════════════════ CARD ═══════════════════ */
 .card {
-  background: #ffffff;
+  background: var(--card-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border-radius: var(--r-lg);
-  border: 1px solid rgba(11,158,154,0.15);
-  box-shadow: var(--shadow-card);
-  padding: 18px;
+  border: 1px solid rgba(255,255,255,0.72);
+  box-shadow: var(--card-shadow);
+  padding: 16px;
   margin-bottom: 14px;
   overflow: hidden;
 }
 .card-title {
   font-size: 11px; font-weight: 700;
-  color: var(--tx3, #4A9E9A);
+  color: var(--tx3);
   text-transform: uppercase;
   letter-spacing: 0.09em;
   margin-bottom: 12px;
@@ -176,601 +174,546 @@ body {
 }
 .card-title::before {
   content: '';
-  display: inline-block;
-  width: 3px; height: 14px;
+  width: 3px; height: 13px;
   border-radius: 2px;
-  background: linear-gradient(to bottom, #0B9E9A, #076F6C);
+  background: linear-gradient(to bottom, var(--tf), var(--tf-dark));
+  flex-shrink: 0;
 }
 
-/* ═══════════════════════════════════════════
-   輸入欄位
-═══════════════════════════════════════════ */
+/* ═══════════════════ FORM INPUTS ═══════════════════ */
 .field { margin-bottom: 12px; }
 .field:last-child { margin-bottom: 0; }
 .field-label {
   font-size: 12px; font-weight: 700;
-  color: var(--tx2, #1A6562);
-  margin-bottom: 6px;
-  display: block;
-  letter-spacing: 0.02em;
+  color: var(--tx2); margin-bottom: 5px;
+  display: block; letter-spacing: 0.02em;
 }
-.field-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-}
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
 input[type="date"],
 input[type="number"],
 select {
-  width: 100%; max-width: 100%;
-  padding: 13px 14px;
+  width: 100%;
+  padding: 12px 13px;
   border: 1.5px solid rgba(11,158,154,0.22);
   border-radius: var(--r-md);
-  font-size: 16px;
-  font-family: 'SF Mono', 'Menlo', 'Monaco', 'Consolas', 'Courier New', monospace;
-  font-weight: 500;
-  color: var(--tx1, #022E2C);
-  background: var(--input-bg, #ffffff);
+  font-size: 15px;
+  font-family: 'DM Mono', monospace; font-weight: 500;
+  color: var(--tx1);
+  background: var(--input-bg);
   -webkit-appearance: none; appearance: none;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  transition: border-color 0.18s, box-shadow 0.18s;
   color-scheme: light;
-  box-shadow: inset 0 1px 3px rgba(4,79,77,0.06);
+  box-shadow: inset 0 1px 3px rgba(4,79,77,0.05);
 }
 input[type="date"]:focus,
 input[type="number"]:focus,
 select:focus {
   outline: none;
-  border-color: var(--tf, #0B9E9A);
-  box-shadow: 0 0 0 3.5px rgba(11,158,154,0.2), inset 0 1px 3px rgba(4,79,77,0.06);
+  border-color: var(--tf);
+  box-shadow: 0 0 0 3px rgba(11,158,154,0.18), inset 0 1px 3px rgba(4,79,77,0.05);
 }
 input[type="number"]::-webkit-inner-spin-button { opacity: 1; }
 .select-wrap { position: relative; }
 .select-wrap::after {
   content: "⌄";
-  position: absolute; right: 13px; top: 50%;
+  position: absolute; right: 12px; top: 50%;
   transform: translateY(-52%);
-  pointer-events: none;
-  color: var(--tf-dark, #076F6C);
-  font-size: 17px; font-weight: 700;
+  pointer-events: none; color: var(--tf-dark);
+  font-size: 16px; font-weight: 700;
 }
 
-/* ═══════════════════════════════════════════
-   工作日 Toggle 列
-═══════════════════════════════════════════ */
-.wday-row {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 5px;
-}
+/* ═══════════════════ WORKDAY TOGGLE ═══════════════════ */
+.wday-row { display: grid; grid-template-columns: repeat(7,1fr); gap: 4px; }
 .wday-btn {
   display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  gap: 4px;
-  padding: 9px 2px;
+  align-items: center; justify-content: center; gap: 3px;
+  padding: 8px 2px;
   border-radius: var(--r-sm);
   border: 1.5px solid rgba(11,158,154,0.18);
-  background: #ffffff;
-  cursor: pointer;
-  user-select: none;
-  transition: all 0.18s ease;
+  background: var(--input-bg);
+  cursor: pointer; user-select: none;
+  transition: all 0.16s ease;
 }
 .wday-btn input { display: none; }
-.wday-label {
-  font-size: 13px; font-weight: 700;
-  color: var(--tx3, #4A9E9A);
-  font-family: -apple-system, BlinkMacSystemFont, 'PingFang TC', 'Microsoft JhengHei', sans-serif;
-}
-.wday-dot {
-  width: 5px; height: 5px; border-radius: 50%;
-  background: var(--tx4);
-  transition: background 0.18s;
-}
+.wday-label { font-size: 13px; font-weight: 700; color: var(--tx3); }
+.wday-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--tx4); transition: background 0.16s; }
 .wday-btn.checked {
-  background: linear-gradient(145deg, #0B9E9A 0%, #076F6C 100%);
-  border-color: var(--tf-dark, #076F6C);
-  box-shadow: 0 3px 10px rgba(11,158,154,0.35);
+  background: linear-gradient(145deg, var(--tf) 0%, var(--tf-dark) 100%);
+  border-color: var(--tf-dark);
+  box-shadow: 0 3px 10px rgba(11,158,154,0.32);
 }
 .wday-btn.checked .wday-label { color: #fff; }
-.wday-btn.checked .wday-dot   { background: rgba(255,255,255,0.7); }
-.wday-btn.sat-btn .wday-label { color: var(--violet, #6C5CE7); }
-.wday-btn.sun-btn .wday-label { color: var(--rose, #E84393); }
-.wday-btn.sat-btn.checked,
-.wday-btn.sun-btn.checked {
-  background: linear-gradient(145deg, #3DBFBB 0%, #0B9E9A 100%);
-}
+.wday-btn.checked .wday-dot   { background: rgba(255,255,255,0.65); }
+.wday-btn.sat-btn .wday-label { color: var(--violet); }
+.wday-btn.sun-btn .wday-label { color: var(--rose); }
 
-/* ═══════════════════════════════════════════
-   月曆
-═══════════════════════════════════════════ */
+/* ═══════════════════ RESULT CARDS ═══════════════════ */
+.result-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+.result-card {
+  border-radius: var(--r-lg);
+  padding: 15px 14px 13px;
+  position: relative; overflow: hidden;
+  box-shadow: var(--shadow-md);
+  border: 1px solid rgba(255,255,255,0.5);
+}
+.result-card::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(circle at 80% 20%, rgba(255,255,255,0.12), transparent 60%);
+  pointer-events: none;
+}
+.rc-total { background: linear-gradient(140deg,#0B9E9A 0%,#076F6C 100%); }
+.rc-work  { background: linear-gradient(140deg,#27AE60 0%,#1A7A42 100%); }
+.rc-date  { background: linear-gradient(140deg,#6C5CE7 0%,#4A3CB0 100%); grid-column: 1/-1; padding: 17px 18px; }
+.rc-label {
+  font-size: 10px; font-weight: 700;
+  color: rgba(255,255,255,0.72);
+  text-transform: uppercase; letter-spacing: 0.08em;
+  margin-bottom: 5px;
+  display: flex; align-items: center; gap: 4px;
+}
+.rc-value {
+  font-size: 34px; font-weight: 900;
+  color: #fff; font-family: 'DM Mono', monospace;
+  line-height: 1; letter-spacing: -1px;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.14);
+  word-break: break-word;
+}
+.rc-value.date-val {
+  font-size: 18px; letter-spacing: -0.2px;
+  line-height: 1.35; font-family: 'Noto Sans TC', sans-serif;
+}
+.rc-unit { font-size: 15px; font-weight: 500; color: rgba(255,255,255,0.72); margin-left: 1px; }
+
+/* ═══════════════════ CALENDAR ═══════════════════ */
 .cal-header {
   display: flex; align-items: center; justify-content: space-between;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
-.cal-title {
-  font-size: 17px; font-weight: 900;
-  color: var(--tx1, #022E2C);
-  letter-spacing: -0.2px;
-}
-.cal-nav {
-  display: flex; gap: 6px;
-}
+.cal-title { font-size: 16px; font-weight: 900; color: var(--tx1); letter-spacing: -0.2px; }
+.cal-nav   { display: flex; gap: 6px; }
 .cal-nav-btn {
-  width: 34px; height: 34px;
-  border: none; border-radius: 50%;
-  background: var(--tf-glass2, rgba(11,158,154,0.18));
-  color: var(--tf-dark, #076F6C);
-  font-size: 16px; font-weight: 700;
-  cursor: pointer;
+  width: 32px; height: 32px; border: none; border-radius: 50%;
+  background: var(--tf-glass2); color: var(--tf-dark);
+  font-size: 16px; font-weight: 700; cursor: pointer;
   display: flex; align-items: center; justify-content: center;
   transition: background 0.15s, transform 0.1s;
-  -webkit-tap-highlight-color: transparent;
 }
-.cal-nav-btn:active { transform: scale(0.90); }
+.cal-nav-btn:active { transform: scale(0.88); }
 .cal-nav-btn:hover  { background: rgba(11,158,154,0.28); }
 
-.cal-weekdays {
-  display: grid; grid-template-columns: repeat(7,1fr);
-  margin-bottom: 4px;
-}
-.cal-wd {
-  text-align: center;
-  font-size: 11px; font-weight: 700;
-  padding: 4px 0;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-}
-.cal-wd.wd-wk  { color: var(--tx3, #4A9E9A); }
-.cal-wd.wd-sat { color: var(--violet, #6C5CE7); }
-.cal-wd.wd-sun { color: var(--rose, #E84393); }
+.cal-weekdays { display: grid; grid-template-columns: repeat(7,1fr); margin-bottom: 3px; }
+.cal-wd { text-align: center; font-size: 10px; font-weight: 700; padding: 3px 0; letter-spacing: 0.04em; text-transform: uppercase; }
+.cal-wd.wd-wk  { color: var(--tx3); }
+.cal-wd.wd-sat { color: var(--violet); }
+.cal-wd.wd-sun { color: var(--rose); }
 
-.cal-grid {
-  display: grid; grid-template-columns: repeat(7,1fr);
-  gap: 3px;
-}
+.cal-grid { display: grid; grid-template-columns: repeat(7,1fr); gap: 2px; }
 .cal-day {
   aspect-ratio: 1;
   display: flex; align-items: center; justify-content: center;
-  font-size: 15px; font-weight: 500;
-  font-family: 'SF Mono', 'Menlo', 'Monaco', 'Consolas', 'Courier New', monospace;
+  font-size: 14px; font-weight: 500;
+  font-family: 'DM Mono', monospace;
   border-radius: 50%;
-  cursor: pointer;
-  color: var(--tx2, #1A6562);
+  cursor: pointer; color: var(--tx2);
   position: relative;
   transition: background 0.12s, color 0.12s, transform 0.1s;
   user-select: none;
-  -webkit-tap-highlight-color: transparent;
 }
-.cal-day:not(.empty):active { transform: scale(0.88); }
-.cal-day:hover:not(.empty)  { background: var(--tf-glass2, rgba(11,158,154,0.18)); color: var(--tf-dark, #076F6C); }
+.cal-day:not(.empty):active { transform: scale(0.86); }
+.cal-day:hover:not(.empty)  { background: var(--tf-glass2); color: var(--tf-dark); }
 .cal-day.empty  { cursor: default; }
-.cal-day.dim    { color: var(--tx4, #88C8C5); }
-.cal-day.today  { font-weight: 900; color: var(--tf-dark, #076F6C); }
+.cal-day.dim    { color: var(--tx4); }
+.cal-day.today  { font-weight: 900; color: var(--tf-dark); }
 .cal-day.today::after {
-  content: '';
-  position: absolute; bottom: 3px; left: 50%;
+  content: ''; position: absolute; bottom: 3px; left: 50%;
   transform: translateX(-50%);
-  width: 4px; height: 4px; border-radius: 50%;
-  background: var(--tf, #0B9E9A);
+  width: 4px; height: 4px; border-radius: 50%; background: var(--tf);
 }
 .cal-day.range-start::after,
 .cal-day.range-end::after,
 .cal-day.is-base::after,
 .cal-day.is-result::after { display: none; }
 
-/* 範圍選取 */
 .cal-day.range-start {
-  background: var(--tf, #0B9E9A) !important;
-  color: #fff !important; font-weight: 700;
+  background: var(--tf) !important; color: #fff !important; font-weight: 700;
   border-radius: 50% 0 0 50%;
-  box-shadow: 0 3px 10px rgba(11,158,154,0.5);
+  box-shadow: 0 3px 10px rgba(11,158,154,0.48);
 }
 .cal-day.range-end {
-  background: var(--tf-dark, #076F6C) !important;
-  color: #fff !important; font-weight: 700;
+  background: var(--tf-dark) !important; color: #fff !important; font-weight: 700;
   border-radius: 0 50% 50% 0;
-  box-shadow: 0 3px 10px rgba(4,79,77,0.5);
+  box-shadow: 0 3px 10px rgba(4,79,77,0.48);
 }
-.cal-day.range-start.range-end {
-  border-radius: 50% !important;
-}
-.cal-day.in-range {
-  background: rgba(11,158,154,0.12);
-  color: var(--tf-dark, #076F6C);
-  border-radius: 0;
-}
-.cal-day.in-range.workday {
-  background: rgba(39,174,96,0.13);
-  color: #1a8a3e;
-}
-.cal-day.day-sat:not(.range-start):not(.range-end):not(.in-range) { color: var(--violet, #6C5CE7); }
-.cal-day.day-sun:not(.range-start):not(.range-end):not(.in-range) { color: var(--rose, #E84393); }
+.cal-day.range-start.range-end { border-radius: 50% !important; }
+.cal-day.in-range { background: rgba(11,158,154,0.11); color: var(--tf-dark); border-radius: 0; }
+.cal-day.in-range.workday { background: rgba(39,174,96,0.13); color: #1a8a3e; }
+.cal-day.day-sat:not(.range-start):not(.range-end):not(.in-range) { color: var(--violet); }
+.cal-day.day-sun:not(.range-start):not(.range-end):not(.in-range) { color: var(--rose); }
 
-/* P2 基準/結果 */
-.cal-day.is-base {
-  background: var(--violet, #6C5CE7) !important;
-  color: #fff !important; font-weight: 700;
-  border-radius: 50%;
-  box-shadow: 0 3px 10px rgba(108,92,231,0.5);
-}
-.cal-day.is-result {
-  background: rgba(108,92,231,0.15) !important;
-  color: var(--violet, #6C5CE7) !important; font-weight: 700;
-  border-radius: 50%;
-  box-shadow: inset 0 0 0 2px rgba(108,92,231,0.45);
-}
+.cal-day.is-base   { background: var(--violet) !important; color: #fff !important; font-weight: 700; border-radius: 50%; box-shadow: 0 3px 10px rgba(108,92,231,0.48); }
+.cal-day.is-result { background: rgba(108,92,231,0.14) !important; color: var(--violet) !important; font-weight: 700; border-radius: 50%; box-shadow: inset 0 0 0 2px rgba(108,92,231,0.42); }
 
-/* ═══════════════════════════════════════════
-   月曆圖例
-═══════════════════════════════════════════ */
 .cal-legend {
-  display: flex; flex-wrap: wrap; gap: 10px;
-  margin-top: 12px; padding-top: 12px;
-  border-top: 1px solid rgba(11,158,154,0.12);
+  display: flex; flex-wrap: wrap; gap: 8px;
+  margin-top: 10px; padding-top: 10px;
+  border-top: 1px solid rgba(11,158,154,0.11);
 }
-.legend-item {
-  display: flex; align-items: center; gap: 5px;
-  font-size: 11px; font-weight: 500;
-  color: var(--tx2, #1A6562);
-}
-.legend-dot {
-  width: 10px; height: 10px; border-radius: 50%;
-  flex-shrink: 0;
-}
+.legend-item { display: flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 500; color: var(--tx2); }
+.legend-dot  { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
 
-/* ═══════════════════════════════════════════
-   選取提示 badge
-═══════════════════════════════════════════ */
 .pick-hint {
   display: flex; align-items: center; gap: 6px;
-  background: var(--tf-glass, rgba(11,158,154,0.10));
-  border: 1px solid rgba(11,158,154,0.2);
-  border-radius: 50px;
-  padding: 7px 14px;
-  font-size: 12px; font-weight: 600;
-  color: var(--tf-deeper, #044F4D);
-  margin: 10px 0 0;
-  min-height: 32px;
-}
-.pick-hint-icon { font-size: 13px; }
-
-/* ═══════════════════════════════════════════
-   結果卡片 — 大數字顯示
-═══════════════════════════════════════════ */
-.result-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-  margin-bottom: 14px;
-}
-.result-card {
-  border-radius: var(--r-lg);
-  padding: 16px 14px 14px;
-  position: relative;
-  overflow: hidden;
-  box-shadow: var(--shadow-md);
-  border: 1px solid rgba(255,255,255,0.3);
-}
-.result-card::before {
-  content: '';
-  position: absolute; inset: 0;
-  opacity: 0.08;
-  background: radial-gradient(circle at 80% 20%, white 0%, transparent 60%);
-  pointer-events: none;
-}
-.rc-total {
-  background: linear-gradient(140deg, #0B9E9A 0%, #076F6C 100%);
-}
-.rc-work {
-  background: linear-gradient(140deg, #27AE60 0%, #1A7A42 100%);
-}
-.rc-date {
-  background: linear-gradient(140deg, #6C5CE7 0%, #4A3CB0 100%);
-  grid-column: 1 / -1;
-  padding: 18px 20px;
-}
-.rc-label {
-  font-size: 11px; font-weight: 700;
-  color: rgba(255,255,255,0.75);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  margin-bottom: 6px;
-  display: flex; align-items: center; gap: 5px;
-}
-.rc-label-icon { font-size: 13px; }
-.rc-value {
-  font-size: 36px; font-weight: 900;
-  color: #fff;
-  font-family: 'SF Mono', 'Menlo', 'Monaco', 'Consolas', 'Courier New', monospace;
-  line-height: 1;
-  letter-spacing: -1px;
-  word-break: break-word;
-  text-shadow: 0 2px 8px rgba(0,0,0,0.15);
-}
-.rc-value.date-val {
-  font-size: 20px; letter-spacing: -0.3px;
-  line-height: 1.3; font-family: -apple-system, BlinkMacSystemFont, 'PingFang TC', 'Microsoft JhengHei', sans-serif;
-}
-.rc-unit {
-  font-size: 16px; font-weight: 500;
-  color: rgba(255,255,255,0.75);
-  margin-left: 2px;
+  background: var(--tf-glass); border: 1px solid rgba(11,158,154,0.18);
+  border-radius: 50px; padding: 7px 13px;
+  font-size: 12px; font-weight: 600; color: var(--tf-deeper);
+  margin: 10px 0 0; min-height: 30px;
 }
 
-/* ═══════════════════════════════════════════
-   月曆區段標籤
-═══════════════════════════════════════════ */
 .section-label {
-  font-size: 13px; font-weight: 700;
-  color: var(--tx2, #1A6562);
-  margin: 18px 0 8px;
+  font-size: 12px; font-weight: 700; color: var(--tx2);
+  margin: 14px 0 8px;
   display: flex; align-items: center; gap: 7px;
 }
-.section-label::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: linear-gradient(to right, rgba(11,158,154,0.30), transparent);
+.section-label::after { content: ''; flex: 1; height: 1px; background: linear-gradient(to right, rgba(11,158,154,0.22), transparent); }
+
+.mode-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+/* ═══════════════════════════════════════════════════
+   PC LAYOUT  ≥ 800 px
+═══════════════════════════════════════════════════ */
+@media (min-width: 800px) {
+  /* hide mobile tabbar */
+  .tabbar { display: none; }
+
+  /* show sidebar */
+  .sidebar {
+    display: flex;
+    flex-direction: column;
+    width: var(--sidebar-w);
+    min-height: calc(100vh - 66px);
+    background: rgba(255,255,255,0.45);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border-right: 1px solid rgba(255,255,255,0.5);
+    padding: 20px 12px;
+    position: sticky;
+    top: 66px; /* height of topbar */
+    align-self: flex-start;
+    height: calc(100vh - 66px);
+    overflow-y: auto;
+    gap: 4px;
+  }
+  .sidebar-label {
+    font-size: 10px; font-weight: 700;
+    color: var(--tx4); text-transform: uppercase;
+    letter-spacing: 0.10em;
+    padding: 4px 12px 8px;
+  }
+  .sidebar-btn {
+    display: flex; align-items: center; gap: 10px;
+    padding: 12px 14px;
+    border: none; background: none; cursor: pointer;
+    font-family: 'Noto Sans TC', sans-serif;
+    font-size: 15px; font-weight: 700;
+    color: var(--tx2);
+    border-radius: var(--r-md);
+    transition: background 0.18s, color 0.18s;
+    text-align: left; width: 100%;
+  }
+  .sidebar-btn .sb-icon {
+    font-size: 18px;
+    width: 34px; height: 34px;
+    border-radius: 10px;
+    background: rgba(11,158,154,0.10);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    transition: background 0.18s;
+  }
+  .sidebar-btn:hover { background: rgba(11,158,154,0.08); color: var(--tx1); }
+  .sidebar-btn.active {
+    background: linear-gradient(135deg, rgba(11,158,154,0.15) 0%, rgba(7,111,108,0.10) 100%);
+    color: var(--tf-deeper);
+  }
+  .sidebar-btn.active .sb-icon {
+    background: linear-gradient(135deg, var(--tf) 0%, var(--tf-dark) 100%);
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(11,158,154,0.4);
+  }
+  .sb-text { display: flex; flex-direction: column; }
+  .sb-sub  { font-size: 11px; font-weight: 400; color: var(--tx3); margin-top: 1px; }
+  .sidebar-btn.active .sb-sub { color: var(--tf); }
+
+  /* pages always visible on PC — sidebar controls active highlight only */
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* main content width */
+  .main-content {
+    max-width: var(--content-max);
+    padding: 24px 28px 60px;
+  }
+
+  /* two-column layout inside pages */
+  .pc-cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    align-items: start;
+  }
+  .pc-full { grid-column: 1 / -1; }
+
+  /* larger result values */
+  .rc-value { font-size: 40px; }
+  .rc-value.date-val { font-size: 21px; }
+
+  /* calendar cell font */
+  .cal-day { font-size: 15px; }
 }
 
-/* ═══════════════════════════════════════════
-   P2 模式 & 天數 row
-═══════════════════════════════════════════ */
-.mode-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
+/* ultra-wide: cap content */
+@media (min-width: 1200px) {
+  .main-content { max-width: 980px; }
+  :root { --sidebar-w: 300px; }
 }
 
-/* ═══════════════════════════════════════════
-   RWD
-═══════════════════════════════════════════ */
-@media (max-width: 380px) {
-  .hero h1 { font-size: 20px; }
-  .hero-icon { width: 38px; height: 38px; font-size: 19px; }
+/* small phones */
+@media (max-width: 360px) {
   .rc-value { font-size: 28px; }
-  .rc-value.date-val { font-size: 17px; }
-  .cal-day { font-size: 13px; }
+  .rc-value.date-val { font-size: 15px; }
+  .cal-day { font-size: 12px; }
   .wday-label { font-size: 12px; }
-  .result-row { grid-template-columns: 1fr 1fr; }
-}
-@media (min-width: 600px) {
-  body { padding-bottom: 60px; }
-  .hero { padding-top: 72px; }
-  .seg-wrap, .page, .hero { max-width: 480px; margin-left: auto; margin-right: auto; }
 }
 </style>
-
 </head>
 <body>
 
-<!-- ══ Hero ══ -->
+<div class="app">
 
-<div class="hero">
-  <div class="hero-inner">
-    <div class="hero-icon">⏱</div>
+  <!-- ══ Top Bar ══ -->
+  <header class="topbar">
+    <div class="topbar-icon">⏱</div>
     <div>
-      <h1>工期 &amp; <span>日期</span>計算</h1>
-      <p>月曆視覺化 · 即時計算</p>
+      <div class="topbar-title">工期 &amp; <span>日期</span>計算</div>
+      <div class="topbar-sub">月曆視覺化 · 即時計算</div>
     </div>
-  </div>
-</div>
+  </header>
 
-<!-- ══ Segmented Control ══ -->
+  <div class="body-layout">
 
-<div class="seg-wrap">
-  <div class="seg">
-    <button class="seg-btn active" data-page="p1">
-      <span class="seg-icon">🗓</span>工期計算
-    </button>
-    <button class="seg-btn" data-page="p2">
-      <span class="seg-icon">📐</span>日期推算
-    </button>
-  </div>
-</div>
+    <!-- ══ Sidebar (PC only) ══ -->
+    <aside class="sidebar">
+      <div class="sidebar-label">功能選擇</div>
+      <button class="sidebar-btn active" data-page="p1">
+        <span class="sb-icon">🗓</span>
+        <span class="sb-text">
+          工期計算
+          <span class="sb-sub">計算兩日期間隔天數</span>
+        </span>
+      </button>
+      <button class="sidebar-btn" data-page="p2">
+        <span class="sb-icon">📐</span>
+        <span class="sb-text">
+          日期推算
+          <span class="sb-sub">從基準日加減天數</span>
+        </span>
+      </button>
+    </aside>
 
-<!-- ══════════════════════════════════════
-  Page 1：工期計算機
-══════════════════════════════════════ -->
+    <!-- ══ Main ══ -->
+    <div style="flex:1;display:flex;flex-direction:column;">
 
-<div class="page active" id="p1">
+      <!-- Mobile tab bar -->
+      <nav class="tabbar">
+        <button class="tab-btn active" data-page="p1"><span>🗓</span>工期計算</button>
+        <button class="tab-btn"        data-page="p2"><span>📐</span>日期推算</button>
+      </nav>
 
-  <!-- 日期輸入卡 -->
+      <main class="main-content">
 
-  <div class="card">
-    <div class="card-title">選取計算區間</div>
-    <div class="field-row">
-      <div class="field">
-        <span class="field-label">📅 開始日期</span>
-        <input type="date" id="start-date">
-      </div>
-      <div class="field">
-        <span class="field-label">📅 結束日期</span>
-        <input type="date" id="end-date">
-      </div>
-    </div>
-  </div>
+        <!-- ══ PAGE 1 ══ -->
+        <div class="page active" id="p1">
+          <div class="pc-cols">
+            <!-- Left col -->
+            <div>
+              <div class="card">
+                <div class="card-title">選取計算區間</div>
+                <div class="field-row">
+                  <div class="field">
+                    <span class="field-label">📅 開始日期</span>
+                    <input type="date" id="start-date">
+                  </div>
+                  <div class="field">
+                    <span class="field-label">📅 結束日期</span>
+                    <input type="date" id="end-date">
+                  </div>
+                </div>
+              </div>
 
-  <!-- 工作日設定卡 -->
+              <div class="card">
+                <div class="card-title">工作日設定</div>
+                <div class="wday-row" id="wday-group">
+                  <label class="wday-btn checked"><input type="checkbox" value="1" checked><span class="wday-label">一</span><span class="wday-dot"></span></label>
+                  <label class="wday-btn checked"><input type="checkbox" value="2" checked><span class="wday-label">二</span><span class="wday-dot"></span></label>
+                  <label class="wday-btn checked"><input type="checkbox" value="3" checked><span class="wday-label">三</span><span class="wday-dot"></span></label>
+                  <label class="wday-btn checked"><input type="checkbox" value="4" checked><span class="wday-label">四</span><span class="wday-dot"></span></label>
+                  <label class="wday-btn checked"><input type="checkbox" value="5" checked><span class="wday-label">五</span><span class="wday-dot"></span></label>
+                  <label class="wday-btn sat-btn"><input type="checkbox" value="6"><span class="wday-label">六</span><span class="wday-dot"></span></label>
+                  <label class="wday-btn sun-btn"><input type="checkbox" value="0"><span class="wday-label">日</span><span class="wday-dot"></span></label>
+                </div>
+              </div>
 
-  <div class="card">
-    <div class="card-title">工作日設定</div>
-    <div class="wday-row" id="wday-group">
-      <label class="wday-btn checked"><input type="checkbox" value="1" checked><span class="wday-label">一</span><span class="wday-dot"></span></label>
-      <label class="wday-btn checked"><input type="checkbox" value="2" checked><span class="wday-label">二</span><span class="wday-dot"></span></label>
-      <label class="wday-btn checked"><input type="checkbox" value="3" checked><span class="wday-label">三</span><span class="wday-dot"></span></label>
-      <label class="wday-btn checked"><input type="checkbox" value="4" checked><span class="wday-label">四</span><span class="wday-dot"></span></label>
-      <label class="wday-btn checked"><input type="checkbox" value="5" checked><span class="wday-label">五</span><span class="wday-dot"></span></label>
-      <label class="wday-btn sat-btn"><input type="checkbox" value="6"><span class="wday-label">六</span><span class="wday-dot"></span></label>
-      <label class="wday-btn sun-btn"><input type="checkbox" value="0"><span class="wday-label">日</span><span class="wday-dot"></span></label>
-    </div>
-  </div>
+              <div class="result-row">
+                <div class="result-card rc-total">
+                  <div class="rc-label">📆 總曆天數</div>
+                  <div class="rc-value" id="out-total">—<span class="rc-unit">天</span></div>
+                </div>
+                <div class="result-card rc-work">
+                  <div class="rc-label">💼 工作天數</div>
+                  <div class="rc-value" id="out-work">—<span class="rc-unit">天</span></div>
+                </div>
+              </div>
+            </div>
 
-  <!-- 結果卡 -->
+            <!-- Right col: calendar -->
+            <div>
+              <div class="card">
+                <div class="cal-header">
+                  <div class="cal-title" id="p1-cal-title"></div>
+                  <div class="cal-nav">
+                    <button class="cal-nav-btn" id="p1-prev">‹</button>
+                    <button class="cal-nav-btn" id="p1-next">›</button>
+                  </div>
+                </div>
+                <div class="cal-weekdays">
+                  <span class="cal-wd wd-wk">一</span><span class="cal-wd wd-wk">二</span>
+                  <span class="cal-wd wd-wk">三</span><span class="cal-wd wd-wk">四</span>
+                  <span class="cal-wd wd-wk">五</span><span class="cal-wd wd-sat">六</span>
+                  <span class="cal-wd wd-sun">日</span>
+                </div>
+                <div class="cal-grid" id="p1-grid"></div>
+                <div class="pick-hint" id="p1-hint">
+                  <span>👆</span>點擊日期設定開始日，再點設定結束日
+                </div>
+                <div class="cal-legend">
+                  <div class="legend-item"><div class="legend-dot" style="background:var(--tf)"></div>開始日</div>
+                  <div class="legend-item"><div class="legend-dot" style="background:var(--tf-dark)"></div>結束日</div>
+                  <div class="legend-item"><div class="legend-dot" style="background:rgba(39,174,96,0.55)"></div>工作日</div>
+                  <div class="legend-item"><div class="legend-dot" style="background:rgba(11,158,154,0.25)"></div>假日</div>
+                </div>
+              </div>
+            </div>
+          </div><!-- /pc-cols -->
+        </div><!-- /p1 -->
 
-  <div class="result-row">
-    <div class="result-card rc-total">
-      <div class="rc-label"><span class="rc-label-icon">📆</span>總曆天數</div>
-      <div class="rc-value" id="out-total">—<span class="rc-unit">天</span></div>
-    </div>
-    <div class="result-card rc-work">
-      <div class="rc-label"><span class="rc-label-icon">💼</span>工作天數</div>
-      <div class="rc-value" id="out-work">—<span class="rc-unit">天</span></div>
-    </div>
-  </div>
+        <!-- ══ PAGE 2 ══ -->
+        <div class="page" id="p2">
+          <div class="pc-cols">
+            <!-- Left col -->
+            <div>
+              <div class="card">
+                <div class="card-title">推算設定</div>
+                <div class="field" style="margin-bottom:12px;">
+                  <span class="field-label">📅 基準日期</span>
+                  <input type="date" id="base-date">
+                </div>
+                <div class="mode-row">
+                  <div class="field">
+                    <span class="field-label">⚙️ 模式</span>
+                    <div class="select-wrap">
+                      <select id="calc-mode">
+                        <option value="add">加上 (+)</option>
+                        <option value="sub">減去 (−)</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="field">
+                    <span class="field-label">🔢 天數</span>
+                    <input type="number" id="calc-num" value="30" min="0">
+                  </div>
+                </div>
+              </div>
 
-  <!-- 月曆 -->
+              <div class="result-row">
+                <div class="result-card rc-date">
+                  <div class="rc-label">🎯 推算結果日期</div>
+                  <div class="rc-value date-val" id="out-date">請輸入資料</div>
+                </div>
+              </div>
 
-  <div class="card">
-    <div class="cal-header">
-      <div class="cal-title" id="p1-cal-title">— 年 — 月</div>
-      <div class="cal-nav">
-        <button class="cal-nav-btn" id="p1-prev">‹</button>
-        <button class="cal-nav-btn" id="p1-next">›</button>
-      </div>
-    </div>
-    <div class="cal-weekdays">
-      <span class="cal-wd wd-wk">一</span>
-      <span class="cal-wd wd-wk">二</span>
-      <span class="cal-wd wd-wk">三</span>
-      <span class="cal-wd wd-wk">四</span>
-      <span class="cal-wd wd-wk">五</span>
-      <span class="cal-wd wd-sat">六</span>
-      <span class="cal-wd wd-sun">日</span>
-    </div>
-    <div class="cal-grid" id="p1-grid"></div>
-    <div class="pick-hint" id="p1-hint">
-      <span class="pick-hint-icon">👆</span>
-      點擊日期設定開始日，再點設定結束日
-    </div>
-    <div class="cal-legend">
-      <div class="legend-item"><div class="legend-dot" style="background:var(--tf)"></div>開始日</div>
-      <div class="legend-item"><div class="legend-dot" style="background:var(--tf-dark)"></div>結束日</div>
-      <div class="legend-item"><div class="legend-dot" style="background:rgba(39,174,96,0.55)"></div>工作日</div>
-      <div class="legend-item"><div class="legend-dot" style="background:rgba(11,158,154,0.25)"></div>假日</div>
-    </div>
-  </div>
+              <!-- Result calendar (cross-month) -->
+              <div class="section-label" id="p2r-label" style="display:none;">🎯 推算結果月曆</div>
+              <div class="card" id="p2r-card" style="display:none;border:1.5px solid rgba(108,92,231,0.3);">
+                <div class="cal-header">
+                  <div class="cal-title" id="p2r-cal-title" style="color:var(--violet)"></div>
+                </div>
+                <div class="cal-weekdays">
+                  <span class="cal-wd wd-wk">一</span><span class="cal-wd wd-wk">二</span>
+                  <span class="cal-wd wd-wk">三</span><span class="cal-wd wd-wk">四</span>
+                  <span class="cal-wd wd-wk">五</span><span class="cal-wd wd-sat">六</span>
+                  <span class="cal-wd wd-sun">日</span>
+                </div>
+                <div class="cal-grid" id="p2r-grid"></div>
+                <div class="cal-legend">
+                  <div class="legend-item"><div class="legend-dot" style="background:var(--violet)"></div>基準日</div>
+                  <div class="legend-item"><div class="legend-dot" style="background:rgba(108,92,231,0.3);box-shadow:inset 0 0 0 2px rgba(108,92,231,0.45)"></div>結果日</div>
+                </div>
+              </div>
+            </div>
 
-</div><!-- /p1 -->
+            <!-- Right col: base calendar -->
+            <div>
+              <div class="card">
+                <div class="cal-header">
+                  <div class="cal-title" id="p2-cal-title"></div>
+                  <div class="cal-nav">
+                    <button class="cal-nav-btn" id="p2-prev">‹</button>
+                    <button class="cal-nav-btn" id="p2-next">›</button>
+                  </div>
+                </div>
+                <div class="cal-weekdays">
+                  <span class="cal-wd wd-wk">一</span><span class="cal-wd wd-wk">二</span>
+                  <span class="cal-wd wd-wk">三</span><span class="cal-wd wd-wk">四</span>
+                  <span class="cal-wd wd-wk">五</span><span class="cal-wd wd-sat">六</span>
+                  <span class="cal-wd wd-sun">日</span>
+                </div>
+                <div class="cal-grid" id="p2-grid"></div>
+                <div class="pick-hint" id="p2-hint">
+                  <span>👆</span>點擊月曆選取基準日期
+                </div>
+                <div class="cal-legend">
+                  <div class="legend-item"><div class="legend-dot" style="background:var(--violet)"></div>基準日</div>
+                  <div class="legend-item"><div class="legend-dot" style="background:rgba(108,92,231,0.3);box-shadow:inset 0 0 0 2px rgba(108,92,231,0.45)"></div>結果日（同月）</div>
+                </div>
+              </div>
+            </div>
+          </div><!-- /pc-cols -->
+        </div><!-- /p2 -->
 
-<!-- ══════════════════════════════════════
-  Page 2：日期推算
-══════════════════════════════════════ -->
-
-<div class="page" id="p2">
-
-  <!-- 輸入卡 -->
-
-  <div class="card">
-    <div class="card-title">推算設定</div>
-    <div class="field" style="margin-bottom:12px;">
-      <span class="field-label">📅 基準日期</span>
-      <input type="date" id="base-date">
-    </div>
-    <div class="mode-row">
-      <div class="field">
-        <span class="field-label">⚙️ 模式</span>
-        <div class="select-wrap">
-          <select id="calc-mode">
-            <option value="add">加上 (+)</option>
-            <option value="sub">減去 (−)</option>
-          </select>
-        </div>
-      </div>
-      <div class="field">
-        <span class="field-label">🔢 天數</span>
-        <input type="number" id="calc-num" value="30" min="0">
-      </div>
-    </div>
-  </div>
-
-  <!-- 結果卡 -->
-
-  <div class="result-row">
-    <div class="result-card rc-date">
-      <div class="rc-label"><span class="rc-label-icon">🎯</span>推算結果日期</div>
-      <div class="rc-value date-val" id="out-date">請輸入資料</div>
-    </div>
-  </div>
-
-  <!-- 基準月曆 -->
-
-  <div class="section-label">📍 基準日月曆</div>
-  <div class="card">
-    <div class="cal-header">
-      <div class="cal-title" id="p2-cal-title">— 年 — 月</div>
-      <div class="cal-nav">
-        <button class="cal-nav-btn" id="p2-prev">‹</button>
-        <button class="cal-nav-btn" id="p2-next">›</button>
-      </div>
-    </div>
-    <div class="cal-weekdays">
-      <span class="cal-wd wd-wk">一</span><span class="cal-wd wd-wk">二</span>
-      <span class="cal-wd wd-wk">三</span><span class="cal-wd wd-wk">四</span>
-      <span class="cal-wd wd-wk">五</span><span class="cal-wd wd-sat">六</span>
-      <span class="cal-wd wd-sun">日</span>
-    </div>
-    <div class="cal-grid" id="p2-grid"></div>
-    <div class="pick-hint" id="p2-hint">
-      <span class="pick-hint-icon">👆</span>
-      點擊月曆選取基準日期
-    </div>
-    <div class="cal-legend">
-      <div class="legend-item"><div class="legend-dot" style="background:var(--violet)"></div>基準日</div>
-      <div class="legend-item"><div class="legend-dot" style="background:rgba(108,92,231,0.3);box-shadow:inset 0 0 0 2px rgba(108,92,231,0.5);"></div>結果日（同月）</div>
-    </div>
-  </div>
-
-  <!-- 結果月曆（跨月時顯示） -->
-
-  <div class="section-label" id="p2r-label" style="display:none;">🎯 推算結果月曆</div>
-  <div class="card" id="p2r-card" style="display:none;border:1.5px solid rgba(108,92,231,0.3);">
-    <div class="cal-header">
-      <div class="cal-title" id="p2r-cal-title" style="color:var(--violet)">— 年 — 月</div>
-    </div>
-    <div class="cal-weekdays">
-      <span class="cal-wd wd-wk">一</span><span class="cal-wd wd-wk">二</span>
-      <span class="cal-wd wd-wk">三</span><span class="cal-wd wd-wk">四</span>
-      <span class="cal-wd wd-wk">五</span><span class="cal-wd wd-sat">六</span>
-      <span class="cal-wd wd-sun">日</span>
-    </div>
-    <div class="cal-grid" id="p2r-grid"></div>
-    <div class="cal-legend">
-      <div class="legend-item"><div class="legend-dot" style="background:var(--violet)"></div>基準日</div>
-      <div class="legend-item"><div class="legend-dot" style="background:rgba(108,92,231,0.3);box-shadow:inset 0 0 0 2px rgba(108,92,231,0.5);"></div>結果日</div>
-    </div>
-  </div>
-
-</div><!-- /p2 -->
+      </main>
+    </div><!-- /flex col -->
+  </div><!-- /body-layout -->
+</div><!-- /app -->
 
 <script>
-/* ════════════════════════════════════════
-   工具函式
-════════════════════════════════════════ */
+/* ── utils ── */
 const toLocal = s => { if(!s) return null; const[y,m,d]=s.split('-').map(Number); return new Date(y,m-1,d); };
 const toStr   = d => { if(!d) return ''; return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; };
 const sameDay = (a,b) => a&&b && a.getFullYear()===b.getFullYear() && a.getMonth()===b.getMonth() && a.getDate()===b.getDate();
-function todayLocal() {
-  const d=new Date();
-  return toStr(d);
-}
-const TODAY_STR  = todayLocal();
+function todayStr() { const d=new Date(); return toStr(d); }
+const TODAY_STR  = todayStr();
 const TODAY_DATE = toLocal(TODAY_STR);
 
-/* ════════════════════════════════════════
-   Segmented Control 切換
-════════════════════════════════════════ */
-document.querySelectorAll('.seg-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.seg-btn').forEach(b => b.classList.remove('active'));
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    btn.classList.add('active');
-    document.getElementById(btn.dataset.page).classList.add('active');
-  });
+/* ── navigation ── */
+function setPage(pid) {
+  document.querySelectorAll('.page').forEach(p => p.classList.toggle('active', p.id===pid));
+  document.querySelectorAll('.tab-btn,.sidebar-btn').forEach(b => b.classList.toggle('active', b.dataset.page===pid));
+}
+document.querySelectorAll('.tab-btn,.sidebar-btn').forEach(btn => {
+  btn.addEventListener('click', () => setPage(btn.dataset.page));
 });
 
-/* ════════════════════════════════════════
-   工作日 Toggle
-════════════════════════════════════════ */
+/* ── workday toggles ── */
 document.querySelectorAll('.wday-btn input').forEach(cb => {
   cb.addEventListener('change', () => {
     cb.closest('.wday-btn').classList.toggle('checked', cb.checked);
@@ -781,201 +724,135 @@ function getWorkdays() {
   return Array.from(document.querySelectorAll('#wday-group input:checked')).map(c => parseInt(c.value));
 }
 
-/* ════════════════════════════════════════
-   共用月曆渲染
-════════════════════════════════════════ */
-function renderCal(gridId, titleId, year, month, options={}) {
-  const { startDate, endDate, baseDate, resultDate, workdays=[], onDayClick } = options;
-  const grid = document.getElementById(gridId);
+/* ── calendar renderer ── */
+function renderCal(gridId, titleId, year, month, opts={}) {
+  const { startDate, endDate, baseDate, resultDate, workdays=[], onDayClick } = opts;
   document.getElementById(titleId).textContent = `${year} 年 ${month+1} 月`;
+  const grid = document.getElementById(gridId);
   grid.innerHTML = '';
+
+  let dS = startDate, dE = endDate;
+  if(dS && dE && dS > dE) [dS,dE]=[dE,dS];
 
   const first = new Date(year, month, 1);
   const last  = new Date(year, month+1, 0);
-  let offset = first.getDay(); // 0=Sun
-  offset = offset===0 ? 6 : offset-1;
+  let offset  = first.getDay(); offset = offset===0 ? 6 : offset-1;
 
-  let dS = startDate, dE = endDate;
-  if(dS && dE && dS > dE) [dS, dE] = [dE, dS];
+  for(let i=0;i<offset;i++) { const e=document.createElement('div'); e.className='cal-day empty'; grid.appendChild(e); }
 
-  for(let i=0; i<offset; i++) {
-    const el = document.createElement('div');
-    el.className = 'cal-day empty';
-    grid.appendChild(el);
-  }
-
-  for(let d=1; d<=last.getDate(); d++) {
-    const date = new Date(year, month, d);
-    const wd   = date.getDay();
-    const el   = document.createElement('div');
-    el.textContent = d;
-    el.className = 'cal-day';
-
+  for(let d=1;d<=last.getDate();d++) {
+    const date=new Date(year,month,d), wd=date.getDay();
+    const el=document.createElement('div');
+    el.textContent=d; el.className='cal-day';
     if(wd===6) el.classList.add('day-sat');
     if(wd===0) el.classList.add('day-sun');
-    if(sameDay(date, TODAY_DATE)) el.classList.add('today');
+    if(sameDay(date,TODAY_DATE)) el.classList.add('today');
 
-    // 範圍模式
-    if(dS || dE) {
-      if(dS && dE) {
+    if(dS||dE) {
+      if(dS&&dE) {
         if(sameDay(date,dS)) el.classList.add('range-start');
         else if(sameDay(date,dE)) el.classList.add('range-end');
-        else if(date>dS && date<dE) {
-          el.classList.add('in-range');
-          if(workdays.includes(wd)) el.classList.add('workday');
-        }
-      } else if(dS && sameDay(date,dS)) {
-        el.classList.add('range-start','range-end');
-      }
+        else if(date>dS&&date<dE) { el.classList.add('in-range'); if(workdays.includes(wd)) el.classList.add('workday'); }
+      } else if(dS&&sameDay(date,dS)) el.classList.add('range-start','range-end');
     }
+    if(baseDate   && sameDay(date,baseDate))   el.classList.add('is-base');
+    if(resultDate && sameDay(date,resultDate))  el.classList.add('is-result');
 
-    // 基準/結果模式
-    if(baseDate   && sameDay(date, baseDate))   el.classList.add('is-base');
-    if(resultDate && sameDay(date, resultDate))  el.classList.add('is-result');
-
-    if(onDayClick) {
-      el.addEventListener('click', () => onDayClick(year, month, d));
-    } else {
-      el.style.cursor = 'default';
-    }
+    if(onDayClick) el.addEventListener('click',()=>onDayClick(year,month,d));
+    else el.style.cursor='default';
     grid.appendChild(el);
   }
 }
 
-/* ════════════════════════════════════════
-   PAGE 1 — 工期計算
-════════════════════════════════════════ */
-let p1Y = TODAY_DATE.getFullYear();
-let p1M = TODAY_DATE.getMonth();
-let p1Start = toLocal(TODAY_STR);
-let p1End   = toLocal(TODAY_STR);
-let p1Step  = 0; // 0=選起始,1=選結束
+/* ════════════ PAGE 1 ════════════ */
+let p1Y=TODAY_DATE.getFullYear(), p1M=TODAY_DATE.getMonth();
+let p1Start=toLocal(TODAY_STR), p1End=toLocal(TODAY_STR), p1Step=0;
 
-const startInput = document.getElementById('start-date');
-const endInput   = document.getElementById('end-date');
-startInput.value = TODAY_STR;
-endInput.value   = TODAY_STR;
+const startInput=document.getElementById('start-date');
+const endInput  =document.getElementById('end-date');
+startInput.value=TODAY_STR; endInput.value=TODAY_STR;
 
 function calcP1() {
-  if(!p1Start || !p1End) return;
-  let dS = p1Start, dE = p1End;
-  if(dS > dE) [dS,dE] = [dE,dS];
-  const total = Math.floor((dE-dS)/86400000)+1;
-  const wdays = getWorkdays();
-  let work=0; const cur=new Date(dS);
-  for(let i=0;i<total;i++) { if(wdays.includes(cur.getDay())) work++; cur.setDate(cur.getDate()+1); }
-  document.getElementById('out-total').innerHTML = `${total}<span class="rc-unit">天</span>`;
-  document.getElementById('out-work').innerHTML  = `${work}<span class="rc-unit">天</span>`;
+  if(!p1Start||!p1End) return;
+  let dS=p1Start,dE=p1End; if(dS>dE)[dS,dE]=[dE,dS];
+  const total=Math.floor((dE-dS)/86400000)+1;
+  const wdays=getWorkdays(); let work=0;
+  const cur=new Date(dS);
+  for(let i=0;i<total;i++){if(wdays.includes(cur.getDay()))work++;cur.setDate(cur.getDate()+1);}
+  document.getElementById('out-total').innerHTML=`${total}<span class="rc-unit">天</span>`;
+  document.getElementById('out-work').innerHTML =`${work}<span class="rc-unit">天</span>`;
 }
-
 function renderP1Cal() {
-  renderCal('p1-grid','p1-cal-title', p1Y, p1M, {
-    startDate: p1Start, endDate: p1End,
-    workdays: getWorkdays(),
-    onDayClick: (y,m,d) => {
-      const clicked = new Date(y,m,d);
-      const hint = document.getElementById('p1-hint');
-      if(p1Step===0) {
-        p1Start=clicked; p1End=null; p1Step=1;
-        startInput.value=toStr(clicked); endInput.value='';
-        hint.innerHTML = '<span class="pick-hint-icon">✅</span>已設開始日，請繼續點選結束日';
+  renderCal('p1-grid','p1-cal-title',p1Y,p1M,{
+    startDate:p1Start, endDate:p1End, workdays:getWorkdays(),
+    onDayClick:(y,m,d)=>{
+      const clicked=new Date(y,m,d);
+      const hint=document.getElementById('p1-hint');
+      if(p1Step===0){
+        p1Start=clicked;p1End=null;p1Step=1;
+        startInput.value=toStr(clicked);endInput.value='';
+        hint.innerHTML='<span>✅</span>已設開始日，請繼續點選結束日';
       } else {
-        if(clicked < p1Start) { p1End=p1Start; p1Start=clicked; }
-        else p1End=clicked;
+        if(clicked<p1Start){p1End=p1Start;p1Start=clicked;}else p1End=clicked;
         p1Step=0;
-        startInput.value=toStr(p1Start); endInput.value=toStr(p1End);
-        hint.innerHTML = `<span class="pick-hint-icon">✅</span>${toStr(p1Start)} → ${toStr(p1End)}`;
+        startInput.value=toStr(p1Start);endInput.value=toStr(p1End);
+        hint.innerHTML=`<span>✅</span>${toStr(p1Start)} → ${toStr(p1End)}`;
         calcP1();
       }
       renderP1Cal();
     }
   });
 }
+startInput.addEventListener('change',()=>{ const d=toLocal(startInput.value); if(d){p1Start=d;p1Y=d.getFullYear();p1M=d.getMonth();} if(p1Start&&p1End)calcP1(); renderP1Cal(); });
+endInput.addEventListener('change',()=>{ const d=toLocal(endInput.value); if(d)p1End=d; if(p1Start&&p1End)calcP1(); renderP1Cal(); });
+document.getElementById('p1-prev').addEventListener('click',()=>{ p1M--;if(p1M<0){p1M=11;p1Y--;} renderP1Cal(); });
+document.getElementById('p1-next').addEventListener('click',()=>{ p1M++;if(p1M>11){p1M=0;p1Y++;} renderP1Cal(); });
 
-startInput.addEventListener('change', () => {
-  const d=toLocal(startInput.value);
-  if(d){ p1Start=d; p1Y=d.getFullYear(); p1M=d.getMonth(); }
-  if(p1Start&&p1End) calcP1(); renderP1Cal();
-});
-endInput.addEventListener('change', () => {
-  const d=toLocal(endInput.value);
-  if(d) p1End=d;
-  if(p1Start&&p1End) calcP1(); renderP1Cal();
-});
-document.getElementById('p1-prev').addEventListener('click',()=>{ p1M--; if(p1M<0){p1M=11;p1Y--;} renderP1Cal(); });
-document.getElementById('p1-next').addEventListener('click',()=>{ p1M++; if(p1M>11){p1M=0;p1Y++;} renderP1Cal(); });
+/* ════════════ PAGE 2 ════════════ */
+let p2Y=TODAY_DATE.getFullYear(), p2M=TODAY_DATE.getMonth();
+let p2Base=toLocal(TODAY_STR), p2Result=null;
 
-/* ════════════════════════════════════════
-   PAGE 2 — 日期推算
-════════════════════════════════════════ */
-let p2Y = TODAY_DATE.getFullYear();
-let p2M = TODAY_DATE.getMonth();
-let p2Base   = toLocal(TODAY_STR);
-let p2Result = null;
-
-const baseInput = document.getElementById('base-date');
-baseInput.value = TODAY_STR;
+const baseInput=document.getElementById('base-date');
+baseInput.value=TODAY_STR;
 
 function calcP2() {
-  const mode = document.getElementById('calc-mode').value;
-  const num  = Math.abs(parseInt(document.getElementById('calc-num').value)||0);
+  const mode=document.getElementById('calc-mode').value;
+  const num=Math.abs(parseInt(document.getElementById('calc-num').value)||0);
   if(!p2Base) return;
-  const d = new Date(p2Base);
-  d.setDate(d.getDate() + (mode==='add' ? num : -num));
-  p2Result = d;
-
-  const opts = { year:'numeric', month:'2-digit', day:'2-digit', weekday:'long' };
-  document.getElementById('out-date').textContent = d.toLocaleDateString('zh-TW', opts);
-  document.getElementById('p2-hint').innerHTML =
-    `<span class="pick-hint-icon">✅</span>基準：${toStr(p2Base)}　→　結果：${toStr(p2Result)}`;
-
-  const sameMonth = p2Base.getFullYear()===p2Result.getFullYear() && p2Base.getMonth()===p2Result.getMonth();
-  document.getElementById('p2r-label').style.display = sameMonth ? 'none' : '';
-  document.getElementById('p2r-card').style.display  = sameMonth ? 'none' : '';
-
+  const d=new Date(p2Base);
+  d.setDate(d.getDate()+(mode==='add'?num:-num));
+  p2Result=d;
+  document.getElementById('out-date').textContent=d.toLocaleDateString('zh-TW',{year:'numeric',month:'2-digit',day:'2-digit',weekday:'long'});
+  document.getElementById('p2-hint').innerHTML=`<span>✅</span>基準：${toStr(p2Base)}　→　結果：${toStr(p2Result)}`;
+  const same=p2Base.getFullYear()===p2Result.getFullYear()&&p2Base.getMonth()===p2Result.getMonth();
+  document.getElementById('p2r-label').style.display=same?'none':'';
+  document.getElementById('p2r-card').style.display =same?'none':'';
   renderP2Cal();
-  if(!sameMonth) renderP2ResultCal();
+  if(!same) renderP2ResultCal();
 }
-
 function renderP2Cal() {
-  renderCal('p2-grid','p2-cal-title', p2Y, p2M, {
-    baseDate: p2Base, resultDate: p2Result,
-    onDayClick: (y,m,d) => {
-      p2Base = new Date(y,m,d);
-      p2Y=y; p2M=m;
-      baseInput.value = toStr(p2Base);
-      calcP2();
-    }
+  renderCal('p2-grid','p2-cal-title',p2Y,p2M,{
+    baseDate:p2Base, resultDate:p2Result,
+    onDayClick:(y,m,d)=>{ p2Base=new Date(y,m,d);p2Y=y;p2M=m;baseInput.value=toStr(p2Base);calcP2(); }
   });
 }
-
 function renderP2ResultCal() {
   if(!p2Result) return;
-  const ry=p2Result.getFullYear(), rm=p2Result.getMonth();
-  renderCal('p2r-grid','p2r-cal-title', ry, rm, {
-    baseDate: p2Base, resultDate: p2Result
-  });
+  renderCal('p2r-grid','p2r-cal-title',p2Result.getFullYear(),p2Result.getMonth(),{baseDate:p2Base,resultDate:p2Result});
 }
-
-baseInput.addEventListener('change', () => {
-  const d=toLocal(baseInput.value);
-  if(d){ p2Base=d; p2Y=d.getFullYear(); p2M=d.getMonth(); } calcP2();
+baseInput.addEventListener('change',()=>{ const d=toLocal(baseInput.value);if(d){p2Base=d;p2Y=d.getFullYear();p2M=d.getMonth();}calcP2(); });
+['calc-mode','calc-num'].forEach(id=>{
+  document.getElementById(id).addEventListener('input',calcP2);
+  document.getElementById(id).addEventListener('change',calcP2);
 });
-['calc-mode','calc-num'].forEach(id => {
-  document.getElementById(id).addEventListener('input',  calcP2);
-  document.getElementById(id).addEventListener('change', calcP2);
-});
-document.getElementById('p2-prev').addEventListener('click',()=>{ p2M--; if(p2M<0){p2M=11;p2Y--;} renderP2Cal(); });
-document.getElementById('p2-next').addEventListener('click',()=>{ p2M++; if(p2M>11){p2M=0;p2Y++;} renderP2Cal(); });
+document.getElementById('p2-prev').addEventListener('click',()=>{ p2M--;if(p2M<0){p2M=11;p2Y--;} renderP2Cal(); });
+document.getElementById('p2-next').addEventListener('click',()=>{ p2M++;if(p2M>11){p2M=0;p2Y++;} renderP2Cal(); });
 
-/* ════════════════════════════════════════
-   初始化
-════════════════════════════════════════ */
+/* ════════════ Init ════════════ */
 renderP1Cal(); calcP1();
 document.getElementById('p2r-label').style.display='none';
 document.getElementById('p2r-card').style.display='none';
 renderP2Cal(); calcP2();
 </script>
-
 </body>
 </html>
